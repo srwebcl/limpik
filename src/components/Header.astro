@@ -1,0 +1,739 @@
+---
+const pathname = Astro.url.pathname;
+const isHome = pathname === "/";
+---
+
+<header
+    class:list={["site-header", { "header-solid": !isHome }]}
+    id="main-header"
+>
+    <div class="container header-container">
+        <!-- Logo -->
+        <a href="/" class="logo-link" aria-label="Ir al inicio">
+            <img src="/images/logo-web.jpg" alt="Limpik" class="logo" />
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+            <ul class="nav-items">
+                <li><a href="/" class="nav-link">Inicio</a></li>
+
+                <li class="dropdown-wrapper">
+                    <button class="nav-link dropdown-trigger">
+                        Servicios
+                        <svg
+                            class="chevron"
+                            width="10"
+                            height="6"
+                            viewBox="0 0 10 6"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M1 1L5 5L9 1"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+
+                    <div class="mega-menu">
+                        <div class="mega-menu-content">
+                            <a
+                                href="/servicios/limpieza-empresas"
+                                class="menu-item"
+                            >
+                                <div class="icon-box blue">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div class="text">
+                                    <span class="title"
+                                        >Limpieza de Empresas</span
+                                    >
+                                    <span class="desc"
+                                        >Oficinas, bodegas y plantas.</span
+                                    >
+                                </div>
+                            </a>
+
+                            <a
+                                href="/servicios/limpieza-edificios"
+                                class="menu-item"
+                            >
+                                <div class="icon-box orange">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div class="text">
+                                    <span class="title"
+                                        >Limpieza de Edificios</span
+                                    >
+                                    <span class="desc"
+                                        >Comunidades y residencias.</span
+                                    >
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li><a href="/nosotros" class="nav-link">Nosotros</a></li>
+                <li><a href="/noticias" class="nav-link">Noticias</a></li>
+                <!-- Denuncias moved to footer -->
+            </ul>
+
+            <a href="/contacto" class="btn-shine">
+                <span>Contacto</span>
+            </a>
+        </nav>
+
+        <!-- Mobile Toggle -->
+        <button
+            class="menu-toggle"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+        >
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" inert>
+        <div class="mobile-drawer-inner">
+            <nav class="mobile-nav">
+                <a href="/" class="mobile-link">
+                    <span>Inicio</span>
+                    <span class="icon">➝</span>
+                </a>
+
+                <div class="mobile-group">
+                    <div class="group-header">
+                        <span class="icon">✨</span> Servicios
+                    </div>
+                    <a
+                        href="/servicios/limpieza-empresas"
+                        class="mobile-sublink">Limpieza de Empresas</a
+                    >
+                    <a
+                        href="/servicios/limpieza-edificios"
+                        class="mobile-sublink">Limpieza de Edificios</a
+                    >
+                </div>
+
+                <a href="/nosotros" class="mobile-link">
+                    <span>Nosotros</span>
+                    <span class="icon">➝</span>
+                </a>
+                <a href="/noticias" class="mobile-link">
+                    <span>Noticias</span>
+                    <span class="icon">➝</span>
+                </a>
+                <!-- Denuncias moved to footer -->
+
+                <div class="mobile-cta-container">
+                    <a href="/contacto" class="btn btn-primary btn-block"
+                        >Contáctanos</a
+                    >
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+</header>
+
+<style>
+    /* --- Variables & Base --- */
+    :root {
+        --header-h: 80px;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .site-header {
+        height: var(--header-h);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        transition: all 0.4s var(--ease-out);
+        background: transparent;
+    }
+
+    /* Scroll State OR Solid State */
+    .site-header.scrolled,
+    .site-header.header-solid {
+        background: #ffffff; /* Solid White */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        height: 80px; /* Keep height consistent or slightly compact */
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 1002; /* Above mobile drawer */
+    }
+
+    /* --- Logo --- */
+    .logo {
+        height: 65px; /* Larger as requested */
+        width: auto;
+        border-radius: 6px;
+        transition: all 0.3s;
+        /* Original Colors Always */
+        filter: none;
+    }
+
+    .site-header.scrolled .logo,
+    .site-header.header-solid .logo {
+        height: 55px; /* Slightly smaller on scroll */
+    }
+
+    .site-header.scrolled .logo,
+    .site-header.header-solid .logo {
+        height: 45px; /* Smaller on scroll */
+        filter: none; /* Original colors */
+    }
+
+    /* --- Desktop Nav --- */
+    .desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .nav-items {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        align-items: center;
+        margin: 0;
+    }
+
+    /* Reset button styles for Services trigger */
+    button.nav-link {
+        background: none;
+        border: none;
+        padding: 0.5rem 0;
+        /* Fonts are handled by .nav-link class */
+    }
+
+    .nav-link {
+        font-family: var(--font-heading);
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: white; /* Default white for hero */
+        cursor: pointer;
+        position: relative;
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.3s;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Link Hover Effect (Underline) */
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--color-secondary);
+        transition: width 0.3s var(--ease-out);
+        border-radius: 2px;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    /* Scrolled Text Color */
+    .site-header.scrolled .nav-link,
+    .site-header.header-solid .nav-link,
+    .site-header.scrolled .chevron path,
+    .site-header.header-solid .chevron path {
+        color: var(--color-text-main);
+        text-shadow: none;
+        stroke: var(--color-text-main);
+    }
+
+    .site-header.scrolled .nav-link:hover,
+    .site-header.header-solid .nav-link:hover {
+        color: var(--color-primary);
+    }
+
+    /* --- Dropdown (Mega Menu Lite) --- */
+    .dropdown-wrapper {
+        position: relative;
+    }
+
+    .chevron {
+        transition: transform 0.3s;
+    }
+    .dropdown-wrapper:hover .chevron {
+        transform: rotate(180deg);
+    }
+
+    .mega-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: white;
+        padding: 0.5rem;
+        border-radius: 16px;
+        box-shadow:
+            0 20px 40px -5px rgba(0, 0, 0, 0.15),
+            0 0 1px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s var(--ease-out);
+        min-width: 320px;
+        margin-top: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Arrow tip */
+    .mega-menu::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        border-left: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .dropdown-wrapper:hover .mega-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .mega-menu-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 12px;
+        transition: background 0.2s;
+        text-decoration: none;
+    }
+
+    .menu-item:hover {
+        background: #f8fafc;
+    }
+
+    .icon-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-shrink: 0;
+    }
+    .icon-box.blue {
+        background: linear-gradient(135deg, #4dabf7, #0056b3);
+    }
+    .icon-box.orange {
+        background: linear-gradient(135deg, #ff9d33, #ff8000);
+    }
+
+    .menu-item .text {
+        display: flex;
+        flex-direction: column;
+    }
+    .menu-item .title {
+        font-weight: 600;
+        color: var(--color-text-main);
+        font-size: 0.95rem;
+    }
+    .menu-item .desc {
+        font-size: 0.8rem;
+        color: var(--color-text-light);
+    }
+
+    /* --- Button Shine Effect --- */
+    .btn-shine {
+        position: relative;
+        padding: 0.7rem 1.8rem;
+        background: var(--color-primary);
+        color: white;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        overflow: hidden;
+        display: inline-block;
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .btn-shine::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent
+        );
+        transition: left 0.5s;
+    }
+
+    .btn-shine:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(0, 86, 179, 0.4);
+    }
+
+    .btn-shine:hover::before {
+        left: 100%;
+    }
+
+    /* --- Mobile Toggle (Big & Modern) --- */
+    .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1002;
+        padding: 10px;
+        width: 50px;
+        height: 50px;
+        position: relative;
+    }
+
+    .hamburger {
+        width: 32px;
+        height: 24px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 3px; /* Thicker */
+        background: white; /* White on hero */
+        margin-bottom: 7px; /* Spaced out */
+        border-radius: 10px;
+        transition: all 0.3s var(--ease-out);
+        transform-origin: center;
+    }
+
+    .hamburger span:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Hamburger X Animation - Force Perfect Center */
+    .menu-toggle[aria-expanded="true"] .hamburger span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: 0;
+        width: 100%; /* Keep width */
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+        width: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .site-header.scrolled .hamburger span,
+    .site-header.header-solid .hamburger span {
+        background: var(--color-text-main);
+    }
+
+    /* Fix: When menu open, hamburger must be dark/visible against the drawer */
+    .menu-toggle[aria-expanded="true"] .hamburger span {
+        background: var(--color-text-main);
+    }
+
+    /* --- Mobile Drawer (Full Screen & Modern) --- */
+    .mobile-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        z-index: 1001;
+        /* Scrollable content needs padding but we handle alignment in flex container */
+        padding: 0;
+        transform: translateX(100%);
+        transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        overflow-y: auto; /* Enable scroll if content is too tall */
+    }
+
+    .mobile-drawer.active {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .mobile-drawer-inner {
+        padding: 7rem 1.5rem 3rem 1.5rem; /* Adjusted top padding */
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        min-height: 100vh; /* Ensure full height for vertical centering if needed */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Start from top */
+    }
+
+    .overlay {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem; /* Consistent gap between cards */
+        width: 100%;
+    }
+
+    /* Card Style Link */
+    .mobile-link,
+    .mobile-group {
+        font-size: 1.25rem; /* Balanced size */
+        font-weight: 600;
+        color: var(--color-text-main);
+        background-color: #f1f5f9; /* Stacked Card Background */
+        padding: 1rem 1.5rem;
+        border-radius: 16px;
+        transition: all 0.2s ease;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: none; /* Remove old border */
+    }
+
+    .mobile-link:active,
+    .mobile-link:hover {
+        background-color: #e2e8f0;
+        transform: scale(0.99); /* Tactile feedback */
+        color: var(--color-primary);
+    }
+
+    .mobile-link .icon {
+        display: inline-block;
+        margin-right: 0.8rem;
+        font-size: 1.4rem;
+        opacity: 0.8;
+    }
+
+    /* Services Group Card */
+    .mobile-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0; /* Interior padding handled by children/header */
+        background-color: #eff6ff; /* Slightly blue tint for services */
+        gap: 0;
+        overflow: hidden;
+    }
+
+    .group-header {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-primary);
+        font-weight: 700;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .mobile-sublink {
+        width: 100%;
+        font-size: 1.15rem;
+        color: var(--color-text-main);
+        padding: 0.8rem 1.5rem;
+        font-weight: 500;
+        border-left: none;
+        transition: background 0.2s;
+        background: transparent; /* Inherit group bg */
+        display: block;
+    }
+
+    .mobile-sublink:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: var(--color-primary);
+    }
+
+    /* Last item in group gets no bottom margin if we had any */
+    .mobile-sublink:last-child {
+        margin-bottom: 0.5rem;
+    }
+
+    .mobile-cta-container {
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .btn-block {
+        width: 100%;
+        text-align: center;
+        padding: 1.1rem;
+        font-size: 1.1rem;
+        border-radius: 16px; /* Match card radius */
+        box-shadow: 0 4px 15px rgba(0, 86, 179, 0.2);
+    }
+
+    /* --- Responsive Breakpoint --- */
+    @media (max-width: 960px) {
+        .desktop-nav {
+            display: none;
+        }
+        .menu-toggle {
+            display: block;
+        }
+    }
+</style>
+
+<script>
+    function initHeader() {
+        const toggle = document.querySelector(".menu-toggle");
+        const drawer = document.querySelector(".mobile-drawer");
+        const overlay = document.querySelector(".overlay");
+        const body = document.body;
+        const header = document.getElementById("main-header");
+
+        // --- Mobile Menu Logic ---
+        const toggleMenu = (e: Event) => {
+            if (e) e.stopPropagation(); // Safe check
+
+            const isExpanded = toggle?.getAttribute("aria-expanded") === "true";
+            toggle?.setAttribute("aria-expanded", String(!isExpanded));
+            drawer?.classList.toggle("active");
+            overlay?.classList.toggle("active");
+
+            // Prevent body scroll
+            body.style.overflow = !isExpanded ? "hidden" : "";
+
+            // Accessibility management
+            if (!isExpanded) {
+                drawer?.removeAttribute("inert");
+                setTimeout(() => drawer?.querySelector("a")?.focus(), 100);
+            } else {
+                drawer?.setAttribute("inert", "");
+            }
+        };
+
+        // Clean up old listeners if they exist (though mostly distinct elements)
+        // Re-attach fresh listeners
+        toggle?.addEventListener("click", toggleMenu);
+
+        // Drawer links close menu
+        drawer?.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                // Manually close
+                toggle?.setAttribute("aria-expanded", "false");
+                drawer?.classList.remove("active");
+                overlay?.classList.remove("active");
+                body.style.overflow = "";
+            });
+        });
+
+        // --- Scroll Logic ---
+        const handleScroll = () => {
+            if (!header) return;
+            if (window.scrollY > 10) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+
+        // Initialize scroll state immediately in case we load scrolled down
+        handleScroll();
+
+        // Throttled scroll listener
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        // Cleanup function for this page lifecycle
+        document.addEventListener(
+            "astro:before-swap",
+            () => {
+                window.removeEventListener("scroll", handleScroll);
+                toggle?.removeEventListener("click", toggleMenu);
+                body.style.overflow = ""; // Reset overflow on nav
+            },
+            { once: true },
+        );
+    }
+
+    // Run on every page load (initial + navigation)
+    document.addEventListener("astro:page-load", initHeader);
+</script>

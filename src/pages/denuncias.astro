@@ -1,0 +1,418 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ComplaintForm from "../components/forms/ComplaintForm.jsx";
+
+const title = "Canal de Denuncias | Limpik";
+const description =
+    "Canal oficial para denuncias de Acoso Laboral, Acoso Sexual y Violencia en el Trabajo (Ley Karin).";
+---
+
+<Layout title={title} description={description}>
+    <Header />
+
+    <main class="main-content-spaced">
+        <!-- Cinematic Hero (Denuncias) -->
+        <section class="service-hero">
+            <div class="hero-slideshow">
+                <div
+                    class="slide active"
+                    style="background-image: url('/images/denuncias.png')"
+                >
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-line title-top">Canal Ético</span>
+                        <span class="title-line title-highlight">DENUNCIAS</span
+                        >
+                        <span class="title-line title-bottom"
+                            >y Reportes Anónimos</span
+                        >
+                    </h1>
+
+                    <p class="hero-description">
+                        Comprometidos con un ambiente de trabajo seguro y
+                        respetuoso. Canal oficial para Ley Karin.
+                    </p>
+                </div>
+            </div>
+            <div class="overlay"></div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="denuncias-layout single-col">
+                    <!-- Intro Info -->
+                    <div class="info-col text-center">
+                        <span class="section-label"
+                            >Confidencialidad Garantizada</span
+                        >
+                        <h2>Compromiso con la Integridad y la Ley Karin</h2>
+                        <div class="text-block centered-text">
+                            <p>
+                                En <strong>Limpik</strong>, la seguridad y el
+                                respeto son pilares fundamentales de nuestra
+                                cultura organizacional. En cumplimiento con la <strong
+                                    >Ley Karin (Nº 21.643)</strong
+                                >, hemos habilitado este canal oficial para la
+                                recepción segura y confidencial de reportes
+                                relacionados con:
+                            </p>
+                            <ul class="formal-list inline-list">
+                                <li><strong>Acoso Laboral</strong></li>
+                                <li><strong>Acoso Sexual</strong></li>
+                                <li>
+                                    <strong>Violencia en el Trabajo</strong>
+                                </li>
+                            </ul>
+                            <p>
+                                Este canal es gestionado por un comité de ética
+                                independiente que garantiza el <strong
+                                    >anonimato</strong
+                                > (si así lo desea) y la protección contra represalias.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="form-col centered-form">
+                        <div class="form-card">
+                            <div class="form-header text-center">
+                                <h3>Ingresar Nueva Denuncia</h3>
+                                <p class="justify-center">
+                                    Sus datos están encriptados y protegidos.
+                                </p>
+                            </div>
+                            <ComplaintForm client:load />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    /* --- Cinematic Hero Styles --- */
+    .service-hero {
+        position: relative;
+        background-color: #000;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        color: white;
+        overflow: hidden;
+    }
+
+    .service-hero .container {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding-left: 8%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .hero-slideshow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1);
+        z-index: 0;
+    }
+
+    .slide.active {
+        opacity: 1;
+        z-index: 2;
+        /* Single slide: slower continuous movement */
+        animation: kenBurns 30s ease-out forwards;
+    }
+
+    @keyframes kenBurns {
+        0% {
+            transform: scale(1) translate(0, 0);
+        }
+        100% {
+            transform: scale(1.15) translate(-1%, -1%);
+        }
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            rgba(30, 58, 138, 0.95) 0%,
+            rgba(30, 58, 138, 0.8) 40%,
+            rgba(30, 58, 138, 0.4) 100%
+        );
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+    }
+
+    .hero-title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+    }
+
+    .title-line {
+        display: block;
+        opacity: 0;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .title-top {
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        animation-delay: 0.1s;
+    }
+
+    .title-highlight {
+        font-size: clamp(3rem, 5vw, 5rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        position: relative;
+        z-index: 1;
+        animation-delay: 0.2s;
+        background-image:
+            linear-gradient(
+                120deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.9) 50%,
+                transparent 60%
+            ),
+            linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%);
+        background-size:
+            200% auto,
+            100% auto;
+        background-position:
+            200% center,
+            center center;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #f97316;
+        animation:
+            slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s,
+            textShimmer 4s ease-in-out infinite alternate;
+    }
+
+    .title-bottom {
+        font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        animation-delay: 0.3s;
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin-top: 1rem;
+        line-height: 1.6;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+        opacity: 0;
+    }
+
+    @keyframes slideUpFade {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes textShimmer {
+        0% {
+            background-position:
+                200% center,
+                center center;
+        }
+        100% {
+            background-position:
+                -200% center,
+                center center;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .service-hero .container {
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+        }
+        .hero-title {
+            align-items: center;
+            text-align: center;
+        }
+        .title-top {
+            font-size: 1.5rem;
+        }
+        .title-highlight {
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+        .title-bottom {
+            font-size: 1.25rem;
+        }
+        .hero-description {
+            margin: 1.5rem auto;
+            font-size: 1rem;
+            text-align: center;
+        }
+    }
+
+    /* --- Denuncias Layout --- */
+    .section {
+        padding: 5rem 0;
+        background-color: #f8fafc; /* Light formal gray */
+    }
+
+    .denuncias-layout.single-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Info Column */
+    .info-col.text-center {
+        text-align: center;
+        max-width: 800px;
+    }
+
+    .section-label {
+        font-family: var(--font-heading);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-secondary);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .info-col h2 {
+        font-size: 2.5rem;
+        color: var(--color-primary); /* Corporate Blue */
+        margin-bottom: 2rem;
+        line-height: 1.2;
+    }
+
+    .text-block.centered-text p {
+        font-size: 1.1rem;
+        color: var(--color-text-main);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Simplified Inline List for Center Layout */
+    .formal-list.inline-list {
+        margin: 2rem 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .formal-list.inline-list li {
+        font-size: 1.1rem;
+        color: var(--color-primary);
+        font-weight: 600;
+        background: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--color-border);
+    }
+
+    /* Form Column */
+    .form-col.centered-form {
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .form-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 16px;
+        box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .form-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .form-header h3 {
+        font-size: 1.8rem;
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+        font-size: 1rem;
+        color: var(--color-text-light);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .justify-center {
+        justify-content: center;
+    }
+
+    .form-header p::before {
+        content: "🔒";
+        font-size: 1.1rem;
+    }
+
+    @media (max-width: 900px) {
+        .info-col h2 {
+            font-size: 2rem;
+        }
+        .form-card {
+            padding: 1.5rem;
+        }
+        .formal-list.inline-list {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+    }
+</style>

@@ -1,0 +1,380 @@
+---
+
+---
+
+<section class="hero-video-wrapper">
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="hero-video">
+            <source src="/videos/limpik-hero.mp4" type="video/mp4" />
+            <!-- Fallback text -->
+            Su navegador no soporta video HTML5.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="container hero-container">
+        <div class="hero-content">
+            <div class="badge reveal-on-scroll">
+                Más de 18 años de experiencia
+            </div>
+
+            <h1 class="reveal-on-scroll stagger-1">
+                <span class="hero-title-main">Limpieza Profesional</span>
+                <span class="hero-title-sub">para empresas y edificios.</span>
+            </h1>
+
+            <p class="hero-subtitle reveal-on-scroll stagger-2">
+                Más de 18 años liderando el mercado de limpieza en Santiago y la
+                V Región. Dedíquese a su negocio o administración, nosotros
+                cuidamos sus espacios.
+            </p>
+
+            <div class="hero-actions reveal-on-scroll stagger-3">
+                <a href="/contacto" class="btn btn-hero">Cotizar Ahora</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-video-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100vh; /* Full Height */
+        display: flex;
+        align-items: center;
+        color: white;
+        overflow: hidden;
+        margin-top: 0; /* Align to top */
+    }
+
+    .btn-hero {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: white;
+        padding: 1rem 3rem; /* Larger touch target */
+        border-radius: 50px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
+        transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .btn-hero:hover {
+        background: var(--gradient-primary); /* Blue Gradient */
+        border-color: transparent;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow:
+            0 10px 30px -5px rgba(37, 99, 235, 0.5),
+            0 0 15px rgba(37, 99, 235, 0.3); /* Blue Glow */
+    }
+
+    .btn-hero:active {
+        transform: translateY(-1px) scale(0.98);
+    }
+
+    .video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    .video-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(0, 30, 60, 0.4) 0%,
+                rgba(0, 20, 40, 0.8) 100%
+            ),
+            linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.7) 0%,
+                rgba(0, 0, 0, 0.3) 100%
+            );
+        z-index: 1;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-top: 4rem; /* Specific space for navbar */
+    }
+
+    .hero-content {
+        max-width: 900px;
+        padding: 0 1.5rem;
+    }
+
+    .badge {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem; /* Space between line and text */
+        padding: 0; /* No padding needed */
+        background: transparent;
+        border: none;
+        box-shadow: none;
+
+        color: rgba(255, 255, 255, 0.9);
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.15em; /* Wider tracking */
+        text-transform: uppercase;
+        margin-bottom: 1.5rem; /* Slightly more breathing room */
+
+        /* Ensure no leftover styles form previous versions */
+        border-radius: 0;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* Gold Accent Line/Dot */
+    .badge::before {
+        content: "";
+        display: block;
+        width: 40px; /* Long elegant line */
+        height: 1px;
+        background: #ffd700; /* Gold */
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Subtle glow */
+        /* Animation: Expand line on load */
+        animation: expandLine 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        transform-origin: left;
+    }
+
+    @keyframes expandLine {
+        from {
+            transform: scaleX(0);
+            opacity: 0;
+        }
+        to {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+    }
+
+    h1 {
+        margin-bottom: 2rem;
+        text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-title-main {
+        display: block;
+        /* Responsive font size to fit on one line: min 2rem, preferred based on viewport, max 6rem */
+        font-size: clamp(2rem, 8vw, 6rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        margin-bottom: 0.5rem;
+        white-space: nowrap; /* Force one line */
+
+        /* Blue Gradient Base + White Shine Effect */
+        background-image: 
+            /* Shine Layer */
+            linear-gradient(
+                120deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.9) 50%,
+                transparent 60%
+            ),
+            /* Base Blue Gradient - Lighter & Fresh */
+            linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    /* White Start */ #60a5fa 40%,
+                    /* Light Sky Blue */ #2563eb 100% /* Vibrant Royal Blue */
+                );
+        background-size:
+            200% auto,
+            100% auto;
+        background-position:
+            200% center,
+            center center;
+
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #2563eb; /* Fallback */
+
+        animation: textShimmer 6s ease-in-out infinite;
+    }
+
+    @keyframes textShimmer {
+        0% {
+            background-position:
+                200% center,
+                center center;
+        }
+        100% {
+            background-position:
+                -200% center,
+                center center;
+        }
+    }
+
+    .hero-title-sub {
+        display: block;
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: rgba(255, 255, 255, 0.9);
+        letter-spacing: -0.02em;
+    }
+
+    /* Keep reduced number of gradients for flexibility */
+    .text-highlight-blue {
+        background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text; /* Compatibility fix applied here too just in case, though global covers it */
+        color: white;
+        filter: drop-shadow(0 0 30px rgba(37, 99, 235, 0.5));
+    }
+
+    .hero-subtitle {
+        font-size: 1.35rem; /* slightly larger */
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+        font-weight: 400;
+        max-width: 70ch;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .btn-glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: white;
+        padding: 0.875rem 2.5rem;
+        border-radius: 50px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        font-size: 1.1rem;
+    }
+
+    .btn-glass:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        border-color: white;
+    }
+
+    /* Scroll Indicator styles */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        opacity: 0.7;
+        animation: float 2s infinite ease-in-out;
+    }
+
+    /* Hide scroll indicator on screens with limited height to prevent overlap */
+    @media (max-height: 750px) {
+        .scroll-indicator {
+            display: none;
+        }
+    }
+
+    @media (max-width: 960px) {
+        .hero-container {
+            align-items: center;
+            padding-top: 5rem;
+        }
+
+        .hero-content {
+            padding: 0 1rem; /* Reduce padding to maximize width */
+            width: 100%;
+        }
+
+        /* H1 Mobile Adjustments */
+        h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title-main {
+            font-size: 3.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-title-sub {
+            font-size: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            padding: 0; /* Remove extra padding since container has it */
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .video-background video {
+            object-position: center;
+        }
+
+        .hero-actions {
+            flex-direction: column;
+            width: 100%;
+            max-width: 100%; /* Allow full width buttons */
+            gap: 1rem;
+            margin-bottom: 0;
+            padding: 0 1rem; /* Add padding to buttons container */
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>

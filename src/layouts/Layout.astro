@@ -1,0 +1,72 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import "../styles/global.css";
+
+import SmartWhatsApp from "../components/SmartWhatsApp.jsx";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Limpik - Soluciones Corporativas de Limpieza" } =
+	Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- Google Fonts: Outfit (Headings) + Inter (Body) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<title>{title}</title>
+		<ViewTransitions />
+	</head>
+	<body>
+		<slot />
+		<SmartWhatsApp client:idle />
+
+		<script>
+			// Simple Scroll Reveal Script
+			const observerOptions = {
+				root: null,
+				rootMargin: "0px",
+				threshold: 0.1,
+			};
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("visible");
+						// Optional: Stop observing once revealed
+						observer.unobserve(entry.target);
+					}
+				});
+			}, observerOptions);
+
+			// Function to init observer (runs on page load and after View Transitions)
+			function initScrollReveal() {
+				document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+					observer.observe(el);
+				});
+			}
+
+			// Run locally
+			initScrollReveal();
+
+			// Re-run on View Transition navigation
+			document.addEventListener("astro:page-load", initScrollReveal);
+		</script>
+	</body>
+</html>

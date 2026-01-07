@@ -1,0 +1,380 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const title = "Noticias y Novedades | Limpik";
+const description =
+    "Artículos sobre limpieza, mantenimiento y novedades de Limpik.";
+---
+
+<Layout title={title} description={description}>
+    <Header />
+
+    <main class="main-content-spaced">
+        <!-- Cinematic Hero (Noticias) -->
+        <section class="service-hero">
+            <div class="hero-slideshow">
+                <div
+                    class="slide active"
+                    style="background-image: url('/images/limpieza-empresa-4.png')"
+                >
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-line title-top">Actualidad</span>
+                        <span class="title-line title-highlight"
+                            >NOVEDADES LIMPIK</span
+                        >
+                        <span class="title-line title-bottom"
+                            >y Artículos de Interés</span
+                        >
+                    </h1>
+
+                    <p class="hero-description">
+                        Manténgase informado sobre las últimas tendencias en
+                        higiene, sustentabilidad y novedades de nuestra empresa.
+                    </p>
+                </div>
+            </div>
+            <div class="overlay"></div>
+        </section>
+
+        <section class="section">
+            <div class="container blog-grid">
+                {
+                    posts.map((post) => (
+                        <article class="blog-card">
+                            {post.data.image && (
+                                <a
+                                    href={`/noticias/${post.slug}`}
+                                    class="card-image-link"
+                                >
+                                    <img
+                                        src={post.data.image}
+                                        alt={post.data.title}
+                                        class="card-image"
+                                    />
+                                </a>
+                            )}
+                            <div class="card-content">
+                                <div class="meta">
+                                    <span class="date">
+                                        {post.data.pubDate.toLocaleDateString(
+                                            "es-CL",
+                                        )}
+                                    </span>
+                                    {post.data.tags && (
+                                        <span class="tag">
+                                            {post.data.tags[0]}
+                                        </span>
+                                    )}
+                                </div>
+                                <h3>
+                                    <a href={`/noticias/${post.slug}`}>
+                                        {post.data.title}
+                                    </a>
+                                </h3>
+                                <p>{post.data.description}</p>
+                                <a
+                                    href={`/noticias/${post.slug}`}
+                                    class="read-more"
+                                >
+                                    Leer más &rarr;
+                                </a>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    /* --- Cinematic Hero Styles --- */
+    .service-hero {
+        position: relative;
+        background-color: #000;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        color: white;
+        overflow: hidden;
+    }
+
+    .service-hero .container {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding-left: 8%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .hero-slideshow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1);
+        z-index: 0;
+    }
+
+    .slide.active {
+        opacity: 1;
+        z-index: 2;
+        /* Single slide: slower continuous movement */
+        animation: kenBurns 30s ease-out forwards;
+    }
+
+    @keyframes kenBurns {
+        0% {
+            transform: scale(1) translate(0, 0);
+        }
+        100% {
+            transform: scale(1.15) translate(-1%, -1%);
+        }
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            rgba(30, 58, 138, 0.95) 0%,
+            rgba(30, 58, 138, 0.8) 40%,
+            rgba(30, 58, 138, 0.4) 100%
+        );
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+    }
+
+    .hero-title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+    }
+
+    .title-line {
+        display: block;
+        opacity: 0;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .title-top {
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        animation-delay: 0.1s;
+    }
+
+    .title-highlight {
+        font-size: clamp(3rem, 5vw, 5rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        position: relative;
+        z-index: 1;
+        animation-delay: 0.2s;
+        background-image:
+            linear-gradient(
+                120deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.9) 50%,
+                transparent 60%
+            ),
+            linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%);
+        background-size:
+            200% auto,
+            100% auto;
+        background-position:
+            200% center,
+            center center;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #f97316;
+        animation:
+            slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s,
+            textShimmer 4s ease-in-out infinite alternate;
+    }
+
+    .title-bottom {
+        font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        animation-delay: 0.3s;
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin-top: 1rem;
+        line-height: 1.6;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+        opacity: 0;
+    }
+
+    @keyframes slideUpFade {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes textShimmer {
+        0% {
+            background-position:
+                200% center,
+                center center;
+        }
+        100% {
+            background-position:
+                -200% center,
+                center center;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .service-hero .container {
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+        }
+        .hero-title {
+            align-items: center;
+            text-align: center;
+        }
+        .title-top {
+            font-size: 1.5rem;
+        }
+        .title-highlight {
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+        .title-bottom {
+            font-size: 1.25rem;
+        }
+        .hero-description {
+            margin: 1.5rem auto;
+            font-size: 1rem;
+            text-align: center;
+        }
+    }
+
+    .section {
+        padding: 5rem 0;
+    }
+
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+
+    .blog-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-image-link {
+        display: block;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .blog-card:hover .card-image {
+        transform: scale(1.05);
+    }
+
+    .card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .meta {
+        font-size: 0.85rem;
+        color: var(--color-text-light);
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tag {
+        background: var(--color-bg-light);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .blog-card h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+    }
+
+    .blog-card p {
+        color: var(--color-text-light);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .read-more {
+        color: var(--color-secondary);
+        font-weight: 600;
+    }
+</style>

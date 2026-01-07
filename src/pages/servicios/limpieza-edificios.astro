@@ -1,0 +1,795 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ContactForm from "../../components/forms/ContactForm.jsx";
+
+const title = "Limpieza de Edificios y Comunidades | Limpik";
+const description =
+    "Mantenimiento de aseo especializado para edificios residenciales, corporativos y comunidades. Confíe la limpieza de sus espacios comunes a expertos.";
+---
+
+<Layout title={title} description={description}>
+    <Header />
+
+    <main class="main-content-spaced">
+        <!-- Hero Section -->
+        <section class="service-hero">
+            <!-- Background Slideshow -->
+            <div class="hero-slideshow">
+                <div
+                    class="slide active"
+                    style="background-image: url('/images/limpieza-edificios-1.png')"
+                >
+                </div>
+                <div
+                    class="slide"
+                    style="background-image: url('/images/limpieza-edificios-2.png')"
+                >
+                </div>
+                <div
+                    class="slide"
+                    style="background-image: url('/images/limpieza-edificios-7.png')"
+                >
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-line title-top"
+                            >Limpieza Especializada para</span
+                        >
+                        <span class="title-line title-highlight"
+                            >SU COMUNIDAD</span
+                        >
+                        <span class="title-line title-bottom"
+                            >y Espacios Comunes</span
+                        >
+                    </h1>
+
+                    <p class="hero-description">
+                        Expertos en mantenimiento de edificios residenciales y
+                        condominios en Santiago y V Región. Garantizamos
+                        ambientes impecables para la tranquilidad de sus
+                        residentes.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a
+                            href="https://wa.me/56990728582?text=Hola,%20me%20interesa%20un%20presupuesto%20para%20limpieza%20de%20edificios"
+                            class="btn-strategic"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                style="margin-right: 8px;"
+                                ><path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                                ></path></svg
+                            >
+                            Solicitar Presupuesto <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay"></div>
+        </section>
+
+        <!-- Main Value Proposition & Grid -->
+        <section class="section intro-section" id="detalles">
+            <div class="container grid-layout">
+                <div class="content-col">
+                    <div class="content-header">
+                        <span class="section-label">Propuesta de Valor</span>
+                        <h2 class="section-title">
+                            Más que limpieza, <br />
+                            <span class="text-highlight-blue"
+                                >bienestar residencial.</span
+                            >
+                        </h2>
+                        <p class="lead-text">
+                            Un edificio cuidado es un hogar mejor valorado. En
+                            Limpik nos ocupamos de los detalles operativos para
+                            que su comunidad disfrute de espacios impecables.
+                        </p>
+                    </div>
+
+                    <!-- Feature Grid -->
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="icon">👥</div>
+                            <h3>Personal de Confianza</h3>
+                            <p>
+                                Reclutamiento riguroso y antecedentes
+                                verificados para seguridad de los residentes.
+                            </p>
+                        </div>
+                        <div class="feature-card highlight">
+                            <div class="icon">🔄</div>
+                            <h3>Reemplazos Garantizados</h3>
+                            <p>
+                                Cubrimos ausencias y vacaciones para que el
+                                servicio nunca se interrumpa.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon">📋</div>
+                            <h3>Supervisión Activa</h3>
+                            <p>
+                                Visitas periódicas y control de calidad para
+                                asegurar el estándar prometido.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon">🌿</div>
+                            <h3>Productos Certificados</h3>
+                            <p>
+                                Insumos de alta calidad, seguros para mascotas y
+                                niños.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Sectors Visual -->
+                    <div class="sectors-wrapper">
+                        <h3>Áreas de Atención:</h3>
+                        <div class="sector-pills">
+                            <span class="sector-pill">🏢 Hall de Acceso</span>
+                            <span class="sector-pill">🚲 Bicicleteros</span>
+                            <span class="sector-pill">🚮 Salas de Basura</span>
+                            <span class="sector-pill">🛋️ Salas de Eventos</span>
+                            <span class="sector-pill"
+                                >🏊‍♂️ Piscinas y Quinchos</span
+                            >
+                            <span class="sector-pill"
+                                >🪜 Escaleras y Pasillos</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-col" id="cotizar">
+                    <div style="position: sticky; top: 100px;">
+                        <ContactForm
+                            client:load
+                            serviceType="Limpieza de Edificios"
+                            title="Cotizar Servicio"
+                            subtitle="Presupuesto para su comunidad en <strong style='color: var(--color-secondary)'>menos de 24 horas.</strong>"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="cta-banner-split">
+            <div class="cta-image-col">
+                <img
+                    src="/images/limpieza-edificios-5.png"
+                    alt="Limpieza profesional en edificio residencial Limpik"
+                    class="cta-image"
+                />
+            </div>
+            <div class="cta-content-col">
+                <div class="cta-content-wrapper">
+                    <span class="cta-label">Tranquilidad y Plusvalía</span>
+                    <h2>
+                        ¿Listo para mejorar la calidad de vida de su comunidad?
+                    </h2>
+                    <p>
+                        Deje la limpieza de los espacios comunes en manos
+                        declientes expertos. Un entorno cuidado aumenta el valor
+                        de su propiedad.
+                    </p>
+
+                    <div class="cta-actions">
+                        <a href="/contacto" class="btn-strategic-white">
+                            Solicitar Propuesta <span class="arrow">→</span>
+                        </a>
+                        <div class="trust-badge">
+                            <span>✅</span> Garantía de Calidad
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    /* Service Hero */
+    .service-hero {
+        position: relative;
+        background-color: #000;
+        height: 650px;
+        display: flex;
+        align-items: center;
+        color: white;
+        overflow: hidden;
+    }
+
+    .service-hero .container {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding-left: 8%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .hero-slideshow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1);
+        transition:
+            transform 20s ease-out,
+            opacity 2s ease-in-out;
+        z-index: 0;
+    }
+
+    .slide.active {
+        opacity: 1;
+        z-index: 2;
+        transform: scale(1.15);
+    }
+
+    .slide.last-active {
+        opacity: 1;
+        z-index: 1;
+        /* No transform override needed; implies reverting to scale(1) via transition */
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            rgba(30, 58, 138, 1) 0%,
+            rgba(30, 58, 138, 0.9) 40%,
+            rgba(30, 58, 138, 0.4) 70%,
+            rgba(30, 58, 138, 0) 100%
+        );
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    .hero-title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+    }
+
+    .title-line {
+        display: block;
+        opacity: 0;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .title-top {
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        animation-delay: 0.1s;
+    }
+
+    .title-highlight {
+        font-size: clamp(3rem, 5vw, 5rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        position: relative;
+        z-index: 1;
+        animation-delay: 0.2s;
+        background-image:
+            linear-gradient(
+                120deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.9) 50%,
+                transparent 60%
+            ),
+            linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%);
+        background-size:
+            200% auto,
+            100% auto;
+        background-position:
+            200% center,
+            center center;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #f97316;
+        animation:
+            slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s,
+            textShimmer 4s ease-in-out infinite alternate;
+    }
+
+    .title-bottom {
+        font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        animation-delay: 0.3s;
+    }
+
+    @keyframes slideUpFade {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes textShimmer {
+        0% {
+            background-position:
+                200% center,
+                center center;
+        }
+        100% {
+            background-position:
+                -200% center,
+                center center;
+        }
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin-top: 1rem;
+        line-height: 1.6;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+        opacity: 0;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        align-items: center;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
+        opacity: 0;
+    }
+
+    .btn-strategic {
+        background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+        color: white;
+        padding: 1.2rem 2.5rem;
+        border-radius: 0.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 1.1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: pulse-glow 2s infinite;
+    }
+
+    .btn-strategic:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(234, 88, 12, 0.6);
+        background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+    }
+
+    @keyframes pulse-glow {
+        0% {
+            box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(234, 88, 12, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(234, 88, 12, 0);
+        }
+    }
+
+    .section {
+        padding: 5rem 0;
+    }
+
+    .grid-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+    }
+
+    .content-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        color: var(--color-primary-dark);
+        line-height: 1.2;
+    }
+
+    .lead-text {
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: #4b5563;
+        max-width: 600px;
+        margin-bottom: 2rem;
+    }
+
+    .section-label {
+        display: inline-block;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-secondary);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+    }
+
+    .text-highlight-blue {
+        color: var(--color-primary);
+        position: relative;
+        display: inline-block;
+    }
+
+    .text-highlight-blue::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(37, 99, 235, 0.1);
+        z-index: -1;
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 1px solid var(--color-border);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card .icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+    }
+
+    .feature-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--color-primary-dark);
+        font-weight: 700;
+    }
+
+    .feature-card p {
+        font-size: 0.95rem;
+        color: var(--color-text-main);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .feature-card.highlight {
+        background: #eff6ff;
+        border-color: #bfdbfe;
+    }
+
+    /* Sectors */
+    .sectors-wrapper {
+        margin-top: 3rem;
+        background: #f8fafc;
+        padding: 2rem;
+        border-radius: 1rem;
+        border: 1px dashed var(--color-border);
+    }
+
+    .sectors-wrapper h3 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-text-light);
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+    }
+
+    .sector-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .sector-pill {
+        background: white;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.9rem;
+        color: var(--color-primary-dark);
+        font-weight: 600;
+        border: 1px solid var(--color-border);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    /* CTA Banner Split */
+    .cta-banner-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        min-height: 500px;
+        overflow: hidden;
+    }
+
+    .cta-image-col {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .cta-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    .cta-banner-split:hover .cta-image {
+        transform: scale(1.05);
+    }
+
+    .cta-content-col {
+        display: flex;
+        align-items: center;
+        padding: 5rem;
+        color: white;
+        position: relative;
+    }
+
+    .cta-content-col::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        z-index: 0;
+    }
+
+    .cta-content-wrapper {
+        position: relative;
+        z-index: 1;
+        max-width: 500px;
+    }
+
+    .cta-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #fb923c;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .cta-banner-split h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        color: white;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+    }
+
+    .cta-banner-split p {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+
+    .cta-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .btn-strategic-white {
+        background: white;
+        color: #1e3a8a;
+        padding: 1rem 2.5rem;
+        border-radius: 0.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-strategic-white:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        background: #f8fafc;
+    }
+
+    .trust-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+        .service-hero .container {
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+        }
+        .hero-content {
+            margin: 0 auto;
+        }
+        .hero-title {
+            align-items: center;
+            text-align: center;
+        }
+
+        .title-top {
+            font-size: 1.5rem;
+        }
+
+        .title-highlight {
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .title-bottom {
+            font-size: 1.25rem;
+        }
+
+        .hero-description {
+            margin: 1.5rem auto;
+            font-size: 1rem;
+            padding: 0 1rem;
+        }
+
+        .hero-actions {
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-strategic {
+            width: 100%;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+        }
+        .grid-layout {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 3rem;
+        }
+        .feature-grid {
+            grid-template-columns: 1fr;
+        }
+        .sector-pills {
+            justify-content: center;
+        }
+        .cta-banner-split {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .cta-content-col {
+            padding: 3rem 1.5rem;
+            justify-content: center;
+        }
+        .cta-actions {
+            align-items: center;
+        }
+        .section-title,
+        .lead-text {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+</style>
+
+<script>
+    function initSlideshow() {
+        const slides = document.querySelectorAll(".hero-slideshow .slide");
+        let currentSlide = 0;
+        const intervalTime = 6000;
+        const transitionTime = 2000;
+
+        if (slides.length > 0) {
+            // Reset state first to avoid stacking issues on re-init
+            slides.forEach((slide, index) => {
+                slide.classList.remove("active", "last-active");
+                if (index === 0) slide.classList.add("active");
+            });
+
+            const interval = setInterval(() => {
+                if (!document.body.contains(slides[0])) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                slides[currentSlide].classList.remove("active");
+                slides[currentSlide].classList.add("last-active");
+
+                const prevSlide = currentSlide;
+                currentSlide = (currentSlide + 1) % slides.length;
+
+                slides[currentSlide].classList.add("active");
+
+                setTimeout(() => {
+                    slides[prevSlide].classList.remove("last-active");
+                }, transitionTime);
+            }, intervalTime);
+
+            // Cleanup on navigation (if re-run)
+            document.addEventListener(
+                "astro:before-preparation",
+                () => {
+                    clearInterval(interval);
+                },
+                { once: true },
+            );
+        }
+    }
+
+    // Run on initial load and View Transitions
+    initSlideshow();
+    document.addEventListener("astro:page-load", initSlideshow);
+</script>
