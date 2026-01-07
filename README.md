@@ -1,43 +1,80 @@
-# Astro Starter Kit: Minimal
+# Limpik - Soluciones Corporativas de Limpieza
 
-```sh
-npm create astro@latest -- --template minimal
-```
+> Una plataforma moderna y de alto rendimiento desarrollada con tecnología de vanguardia para redefinir el estándar de limpieza profesional en Chile.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+![Limpik Banner](/public/images/logo-web.jpg)
 
-## 🚀 Project Structure
+## ⚡ Sobre el Proyecto
 
-Inside of your Astro project, you'll see the following folders and files:
+**Limpik** no es solo un sitio web, es una Progressive Web App (PWA) optimizada diseñada para ofrecer una experiencia de usuario (UX) impecable, velocidad de carga instantánea y una identidad corporativa sólida.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Este proyecto ha sido desarrollado por **SRweb** con un enfoque en:
+- **Performance**: Puntuaciones perfectas en Core Web Vials.
+- **Seguridad**: Protección de datos y formularios seguros.
+- **Escalabilidad**: Arquitectura modular basada en componentes.
+- **Conversión**: Widgets inteligentes y flujos de usuario optimizados.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🛠 Stack Tecnológico
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Utilizamos lo último en tecnología web para garantizar estabilidad y velocidad:
 
-Any static assets, like images, can be placed in the `public/` directory.
+- **Core**: [Astro](https://astro.build) (Framework de arquitectura "Islas").
+- **UI Framework**: React (Para componentes interactivos como el *Chat Widget*).
+- **Estilos**: CSS3 Moderno con Variables CSS (Sin dependencias pesadas).
+- **Animaciones**: Micro-interacciones nativas y transiciones suaves.
+- **Despliegue**: Optimizado para Vercel/Netlify con CI/CD.
 
-## 🧞 Commands
+## 🌟 Funcionalidades Clave
 
-All commands are run from the root of the project, from a terminal:
+### 🤖 Smart WhatsApp Widget
+Un asistente virtual contextual único en su clase:
+- **Detección de Intención**: Analiza la URL del usuario para conectarlo con el departamento correcto (Ventas, Soporte, Canal Ético).
+- **Interfaz de Chat**: Simula una experiencia de mensajería real para reducir la fricción.
+- **Multi-Agente**: Enrrutamiento inteligente de consultas.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### 🎨 Diseño High-Impact
+- **Footer Corporativo**: Diseño premium con degradados de marca exactos.
+- **Tipografía**: Combinación de *Outfit* (Títulos) e *Inter* (Lectura) para máxima legibilidad.
+- **Modo Oscuro/Claro**: Preparado para adaptabilidad visual.
 
-## 👀 Want to learn more?
+## 🚀 Instalación y Desarrollo
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Para levantar este proyecto localmente:
+
+1.  **Clonar el repositorio**:
+    ```bash
+    git clone https://github.com/srwebcl/limpik.git
+    cd limpik
+    ```
+
+2.  **Instalar dependencias**:
+    ```bash
+    npm install
+    ```
+
+3.  **Iniciar servidor de desarrollo**:
+    ```bash
+    npm run dev
+    ```
+
+4.  **Compilar para producción**:
+    ```bash
+    npm run build
+    ```
+
+## 🔐 Seguridad y Privacidad
+
+Este repositorio está configurado para **ignorar automáticamente** archivos sensibles:
+- Credenciales de entorno (`.env`).
+- Archivos de configuración de despliegue local (`.vercel`, `.netlify`).
+- Dependencias pesadas (`node_modules`).
+
+## 👨‍💻 Créditos
+
+Desarrollado con ⚡ y pasión por **SRweb**.
+
+- **Sitio Web**: [www.srweb.cl](https://www.srweb.cl)
+- **Contacto**: contacto@srweb.cl
+
+---
+© 2026 Limpik. Todos los derechos reservados.
