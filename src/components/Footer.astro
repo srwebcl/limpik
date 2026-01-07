@@ -171,30 +171,30 @@ const currentYear = new Date().getFullYear();
     .footer-brand-col {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: flex-start; /* Default Left for Desktop */
+        text-align: left;
     }
 
     .brand-header {
         margin-bottom: 1.5rem;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start; /* Default Left */
     }
 
     .logo-footer {
-        height: 60px; /* Slightly larger */
+        height: 45px;
         width: auto;
         display: block;
-        margin-bottom: 0.75rem;
-        filter: brightness(0) invert(1); /* Make logo white */
+        margin-bottom: 0.5rem;
+        filter: brightness(0) invert(1);
     }
 
     .tagline {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         text-transform: uppercase;
-        letter-spacing: 0.3em;
-        color: var(--color-secondary); /* Orange */
+        letter-spacing: 0.25em;
+        color: var(--color-secondary);
         font-weight: 700;
         opacity: 0.9;
     }
@@ -202,16 +202,16 @@ const currentYear = new Date().getFullYear();
     .description {
         line-height: 1.7;
         font-size: 0.95rem;
-        color: white; /* White */
+        color: white;
         margin-bottom: 2rem;
-        max-width: 350px; /* Slightly wider */
-        text-align: center;
+        max-width: 300px;
+        text-align: left; /* Default Left */
     }
 
     .social-links {
         display: flex;
         gap: 1rem;
-        justify-content: center;
+        justify-content: flex-start; /* Default Left */
     }
 
     .social-icon {
@@ -431,14 +431,26 @@ const currentYear = new Date().getFullYear();
             text-align: center;
         }
 
-        .brand-header,
-        .social-links,
-        .contact-details {
-            align-items: center; /* Flex override */
+        /* Mobile Centering Overrides */
+        .footer-brand-col {
+            align-items: center;
+        }
+
+        .brand-header {
+            align-items: center;
+        }
+
+        .description {
+            text-align: center;
+            max-width: 100%;
         }
 
         .social-links {
             justify-content: center;
+        }
+
+        .contact-details {
+            align-items: center;
         }
 
         .footer-links-col a::before {
@@ -447,7 +459,7 @@ const currentYear = new Date().getFullYear();
 
         .contact-card {
             justify-content: center;
-            text-align: left; /* Keep internal text left aligned */
+            text-align: left;
         }
 
         .bottom-flex {
@@ -455,11 +467,11 @@ const currentYear = new Date().getFullYear();
             gap: 1rem;
         }
 
-        .copyright {
-            order: 2;
-        }
         .credits {
             order: 1;
+        }
+        .copyright {
+            order: 2;
         }
     }
 </style>

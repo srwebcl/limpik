@@ -49,7 +49,7 @@ const SmartWhatsApp = () => {
         setAgent(match);
 
         // Appear animation delay
-        setTimeout(() => setIsVisible(true), 1500);
+        setTimeout(() => setIsVisible(true), 500);
     }, []);
 
     const handleClick = () => {
