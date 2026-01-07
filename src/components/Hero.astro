@@ -331,33 +331,41 @@
     @media (max-width: 960px) {
         .hero-container {
             align-items: center;
-            padding-top: 5rem;
+            padding-top: 6rem; /* More space for navbar */
         }
 
         .hero-content {
-            padding: 0 1rem; /* Reduce padding to maximize width */
+            padding: 0 1.5rem;
             width: 100%;
         }
 
         /* H1 Mobile Adjustments */
         h1 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .hero-title-main {
-            font-size: 3.5rem;
-            margin-bottom: 0.25rem;
+            font-size: clamp(
+                2.5rem,
+                11vw,
+                3.5rem
+            ); /* Responsive but controlled */
+            margin-bottom: 0.5rem;
+            white-space: normal; /* Allow wrapping */
+            line-height: 1.1;
         }
 
         .hero-title-sub {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 6vw, 2rem);
+            line-height: 1.2;
         }
 
         .hero-subtitle {
-            font-size: 1.15rem;
-            padding: 0; /* Remove extra padding since container has it */
-            margin-bottom: 1.5rem;
-            line-height: 1.4;
+            font-size: 1rem;
+            padding: 0;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            max-width: 100%;
         }
 
         .video-background video {
@@ -367,14 +375,16 @@
         .hero-actions {
             flex-direction: column;
             width: 100%;
-            max-width: 100%; /* Allow full width buttons */
             gap: 1rem;
-            margin-bottom: 0;
-            padding: 0 1rem; /* Add padding to buttons container */
+            margin-bottom: 1rem;
+            padding: 0;
         }
 
-        .btn {
+        .btn-hero {
             width: 100%;
+            max-width: 100%;
+            padding: 1rem 2rem;
+            font-size: 1rem;
         }
     }
 </style>

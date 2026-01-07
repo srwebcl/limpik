@@ -312,7 +312,7 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
 			<!-- Form Column -->
 			<div class="cta-form-wrapper reveal-on-scroll stagger-1">
 				<div class="form-glass-container">
-					<ContactForm client:visible />
+					<ContactForm client:idle />
 				</div>
 			</div>
 		</div>
@@ -1076,6 +1076,75 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
 		padding: 0 1.5rem 1.5rem 1.5rem;
 		color: var(--color-text-light);
 		line-height: 1.6;
+	}
+
+	@media (max-width: 960px) {
+		/* Services Section Mobile */
+		.services-layout {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.services-text {
+			align-items: center;
+			text-align: center;
+			max-width: 100%;
+		}
+
+		.services-text h2 {
+			align-items: center;
+			text-align: center;
+		}
+
+		/* Fix Title Overflow on Mobile */
+		.title-highlight {
+			font-size: clamp(2.5rem, 12vw, 3.5rem);
+			word-break: break-word; /* Ensure wrapping if needed */
+		}
+
+		.title-highlight-orange {
+			font-size: clamp(
+				2.2rem,
+				10vw,
+				3.2rem
+			); /* Slightly smaller for EXPERIENCIA */
+		}
+
+		.section-badge {
+			justify-content: center;
+		}
+
+		/* Video Cards Responsive */
+		.video-card {
+			flex: 0 0 85vw; /* Fluid width on mobile */
+			max-width: 380px; /* Cap width */
+			height: 450px;
+		}
+
+		.services-track {
+			padding-right: 1.5rem;
+		}
+
+		/* FAQ & CTA Mobile */
+		.cta-section {
+			padding: 4rem 0;
+		}
+
+		.cta-content h2 {
+			font-size: clamp(2.5rem, 8vw, 3.5rem);
+		}
+
+		.cta-form-wrapper {
+			padding: 0;
+			width: 100%;
+			margin-top: 2rem; /* Add spacing between text and form */
+		}
+
+		/* Ensure form container is visible */
+		.form-glass-container {
+			position: relative;
+			z-index: 10;
+		}
 	}
 </style>
 
