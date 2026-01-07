@@ -21,20 +21,30 @@
 }
 
 /* Tooltip Label */
+/* Tooltip Label - Glassmorphism */
 .whatsapp-tooltip {
-    background: #ea580c;
-    /* High Contrast Orange */
-    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.85);
+    /* Transparent White */
+    backdrop-filter: blur(12px);
+    /* Blur Effect */
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 18px;
     border-radius: 50px;
     font-size: 0.95rem;
-    font-weight: 700;
-    color: white;
-    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+    font-weight: 600;
+    color: #0f172a;
+    /* Dark Elegant Text */
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.05);
     position: relative;
     white-space: nowrap;
     animation: fadeIn 0.5s ease-out 0.5s backwards;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Subtle border */
 }
 
+/* Arrow adjustment for Glass tooltip */
 .whatsapp-tooltip::after {
     content: '';
     position: absolute;
@@ -43,65 +53,76 @@
     transform: translateY(-50%);
     border-width: 6px 0 6px 6px;
     border-style: solid;
-    border-color: transparent transparent transparent #ea580c;
+    /* Transparent arrow matching background is tricky with blur, 
+       so we use a solid fallback color that blends well or omit arrow for floating look.
+       Here we make it subtle white which works on most backgrounds or remove it for cleaner floating look.
+    */
+    border-color: transparent transparent transparent rgba(255, 255, 255, 0.85);
 }
+
 
 /* Float Button */
 .whatsapp-float-btn {
     width: 70px;
-    /* Larger */
     height: 70px;
     border-radius: 50%;
     background-color: #25D366;
     border: 2px solid white;
-    /* Pops against background */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    /* Softer shadow */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bouncy spring */
     position: relative;
     color: white;
     overflow: visible;
-    /* changed for pulse ring */
 }
 
 .whatsapp-float-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+    transform: scale(1.08) rotate(-5deg);
+    /* Playful hover */
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
 }
 
 .whatsapp-float-btn svg {
     position: relative;
     z-index: 2;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
+    transition: transform 0.3s ease;
 }
 
-/* Pulsing Ring Effect - Stronger */
+/* Close Icon Rotation */
+.whatsapp-float-btn.active svg {
+    transform: rotate(90deg);
+}
+
+/* Pulsing Ring Effect - Smoother */
 .whatsapp-float-btn::before {
     content: '';
     position: absolute;
-    top: -5px;
-    left: -5px;
-    width: calc(100% + 10px);
-    height: calc(100% + 10px);
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
     border-radius: 50%;
     border: 2px solid #25D366;
     opacity: 0;
     z-index: 0;
-    animation: pulse-ring-strong 2s infinite;
+    animation: pulse-ring-strong 2.5s infinite;
 }
 
 @keyframes pulse-ring-strong {
     0% {
-        transform: scale(0.8);
-        opacity: 0.8;
+        transform: scale(0.9);
+        opacity: 0.6;
     }
 
     100% {
-        transform: scale(1.5);
+        transform: scale(1.4);
         opacity: 0;
     }
 }
@@ -125,36 +146,50 @@
     }
 
     .whatsapp-float-btn {
-        width: 55px;
-        height: 55px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .whatsapp-float-btn svg {
+        width: 32px;
+        height: 32px;
     }
 
     /* Slightly smaller tooltip on mobile */
     .whatsapp-tooltip {
         font-size: 0.85rem;
-        padding: 6px 12px;
+        padding: 6px 14px;
     }
 }
 
-/* --- Pre-Chat Menu Styles --- */
+/* --- Pre-Chat Menu Styles (Premium) --- */
 .whatsapp-menu {
     position: absolute;
     bottom: 90px;
     right: 0;
-    width: 260px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
-    padding: 8px;
+    width: 280px;
+    /* Slightly wider */
+    background: rgba(255, 255, 255, 0.95);
+    /* High opacity glass */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    /* More rounded */
+    box-shadow:
+        0 20px 40px -5px rgba(0, 0, 0, 0.1),
+        0 10px 20px -5px rgba(0, 0, 0, 0.05);
+    /* Deep soft shadow */
+    padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     opacity: 0;
-    transform: translateY(20px) scale(0.9);
+    transform: translateY(20px) scale(0.95);
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Spring open */
     transform-origin: bottom right;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .whatsapp-menu.open {
@@ -166,44 +201,55 @@
 .whatsapp-menu-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: #f8fafc;
-    border: none;
-    padding: 12px 16px;
-    border-radius: 12px;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    /* Subtle fill */
+    border: 1px solid transparent;
+    padding: 14px 18px;
+    border-radius: 16px;
+    /* Smooth corners */
     text-align: left;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
-    color: #1e293b;
+    color: #334155;
+    position: relative;
+    overflow: hidden;
 }
 
 .whatsapp-menu-item:hover {
-    background: #eff6ff;
-    transform: translateX(-2px);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
 }
 
+/* Remove side borders, use icon colors for differentiation */
 .whatsapp-menu-item.sales {
-    border-left: 4px solid #25d366;
+    border-left: none;
 }
 
 .whatsapp-menu-item.support {
-    border-left: 4px solid #94a3b8;
+    border-left: none;
 }
 
 .whatsapp-menu-item .icon {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .whatsapp-menu-item .text {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .whatsapp-menu-item .title {
     font-weight: 700;
     font-size: 0.95rem;
+    color: #0f172a;
+    letter-spacing: -0.01em;
 }
 
 .whatsapp-menu-item .desc {
@@ -214,14 +260,20 @@
 
 /* Active State for Button (Close Icon) */
 .whatsapp-float-btn.active {
-    background: #1e293b;
-    /* Dark Grey for Close */
+    background: #0f172a;
+    /* Slate 900 */
+    border-color: #334155;
+    transform: rotate(0deg);
+    /* Reset rotation, icon svg handles specific rotation if needed or distinct icon */
+}
+
+/* If switching icon in JSX, ensure SVG handles rotation/transition there, or keep rotation here if using + */
+.whatsapp-float-btn.active svg {
+    /* If using 'x' icon, no rotation needed perhaps, or subtle turn */
     transform: rotate(90deg);
-    border-color: #cbd5e1;
 }
 
 .whatsapp-float-btn.active::before {
     animation: none;
-    /* Stop pulse when menu open */
     opacity: 0;
 }
