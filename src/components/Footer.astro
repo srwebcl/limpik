@@ -168,22 +168,32 @@ const currentYear = new Date().getFullYear();
     }
 
     /* Col 1: Brand */
+    .footer-brand-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .brand-header {
         margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .logo-footer {
-        height: 45px;
+        height: 60px; /* Slightly larger */
         width: auto;
         display: block;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
         filter: brightness(0) invert(1); /* Make logo white */
     }
 
     .tagline {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 0.25em;
+        letter-spacing: 0.3em;
         color: var(--color-secondary); /* Orange */
         font-weight: 700;
         opacity: 0.9;
@@ -194,12 +204,14 @@ const currentYear = new Date().getFullYear();
         font-size: 0.95rem;
         color: white; /* White */
         margin-bottom: 2rem;
-        max-width: 300px;
+        max-width: 350px; /* Slightly wider */
+        text-align: center;
     }
 
     .social-links {
         display: flex;
         gap: 1rem;
+        justify-content: center;
     }
 
     .social-icon {
