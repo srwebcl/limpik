@@ -710,9 +710,12 @@ const description =
         }
 
         .btn-strategic {
-            width: 100%;
+            width: auto; /* Allow auto width to prevent full stuckness */
+            max-width: 90%; /* Safety cap */
             justify-content: center;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.5rem; /* Reduced padding */
+            font-size: 0.9rem; /* Smaller text */
+            margin: 0 auto;
         }
         .grid-layout {
             grid-template-columns: 1fr;

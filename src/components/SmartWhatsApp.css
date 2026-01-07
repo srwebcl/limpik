@@ -22,13 +22,14 @@
 
 /* Tooltip Label */
 .whatsapp-tooltip {
-    background: white;
+    background: #ea580c;
+    /* High Contrast Orange */
     padding: 8px 16px;
     border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #1f2937;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
     position: relative;
     white-space: nowrap;
     animation: fadeIn 0.5s ease-out 0.5s backwards;
@@ -42,17 +43,19 @@
     transform: translateY(-50%);
     border-width: 6px 0 6px 6px;
     border-style: solid;
-    border-color: transparent transparent transparent white;
+    border-color: transparent transparent transparent #ea580c;
 }
 
 /* Float Button */
 .whatsapp-float-btn {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    /* Larger */
+    height: 70px;
     border-radius: 50%;
     background-color: #25D366;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 2px solid white;
+    /* Pops against background */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -60,38 +63,41 @@
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     color: white;
-    overflow: hidden;
+    overflow: visible;
+    /* changed for pulse ring */
 }
 
 .whatsapp-float-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
 }
 
 .whatsapp-float-btn svg {
     position: relative;
     z-index: 2;
+    width: 38px;
+    height: 38px;
 }
 
-/* Pulsing Ring Effect */
+/* Pulsing Ring Effect - Stronger */
 .whatsapp-float-btn::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
     border-radius: 50%;
-    background-color: #25D366;
-    opacity: 0.5;
-    z-index: 1;
-    animation: pulse-ring 2s infinite;
+    border: 2px solid #25D366;
+    opacity: 0;
+    z-index: 0;
+    animation: pulse-ring-strong 2s infinite;
 }
 
-@keyframes pulse-ring {
+@keyframes pulse-ring-strong {
     0% {
-        transform: scale(1);
-        opacity: 0.5;
+        transform: scale(0.8);
+        opacity: 0.8;
     }
 
     100% {
