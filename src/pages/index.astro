@@ -89,6 +89,12 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
 								</div>
 							</a>
 						</div>
+
+						<!-- Swipe Indicator (Mobile Only) -->
+						<div class="swipe-indicator">
+							<span class="hand-icon">👆</span>
+							<span>Desliza</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1078,6 +1084,51 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
 		line-height: 1.6;
 	}
 
+	/* Swipe Indicator (Hidden by default) */
+	.swipe-indicator {
+		display: none;
+		position: absolute;
+		bottom: 2rem;
+		right: 2rem;
+		background: rgba(0, 0, 0, 0.6);
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		font-size: 0.8rem;
+		pointer-events: none;
+		z-index: 10;
+		backdrop-filter: blur(4px);
+		animation: pulseFade 2s infinite;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.hand-icon {
+		display: inline-block;
+		font-size: 1.2rem;
+		animation: swipeAnim 1.5s ease-in-out infinite;
+	}
+
+	@keyframes swipeAnim {
+		0%,
+		100% {
+			transform: translateX(0);
+		}
+		50% {
+			transform: translateX(-10px);
+		}
+	}
+
+	@keyframes pulseFade {
+		0%,
+		100% {
+			opacity: 0.8;
+		}
+		50% {
+			opacity: 0.4;
+		}
+	}
+
 	@media (max-width: 960px) {
 		/* Services Section Mobile */
 		.services-layout {
@@ -1114,15 +1165,29 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
 			justify-content: center;
 		}
 
+		/* Carousel Scroll Snap & Layout */
+		.services-carousel {
+			position: relative; /* Context for swipe indicator */
+		}
+
+		.services-track {
+			padding-right: 1.5rem;
+			/* Scroll Snap Magic */
+			scroll-snap-type: x mandatory;
+			padding-left: 1.5rem; /* Balance padding */
+		}
+
 		/* Video Cards Responsive */
 		.video-card {
 			flex: 0 0 85vw; /* Fluid width on mobile */
 			max-width: 380px; /* Cap width */
 			height: 450px;
+			scroll-snap-align: center; /* Snap to center */
 		}
 
-		.services-track {
-			padding-right: 1.5rem;
+		/* Show Swipe Indicator */
+		.swipe-indicator {
+			display: flex;
 		}
 
 		/* FAQ & CTA Mobile */
