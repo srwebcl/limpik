@@ -149,6 +149,7 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
           width: 100%; /* Fluid width */
           margin-bottom: 2rem;
+          text-align: left; /* Force left alignment for labels/inputs */
         }
         
         .form-grid {
