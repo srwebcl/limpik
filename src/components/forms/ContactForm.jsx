@@ -20,21 +20,32 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
     e.preventDefault();
     setStatus('submitting');
 
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      // integrating with a real backend would happen here
-      // e.g., fetch('/api/send-email', { method: 'POST', ... })
-      console.log('Form submitted:', formData);
-      setStatus('success');
-      setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Redirect to Thank You page
+        window.location.href = '/gracias';
+      } else {
+        const errorData = await response.json();
+        console.error('Error submitting form:', errorData);
+        setStatus('error');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Network error:', error);
       setStatus('error');
     }
   };
 
   if (status === 'success') {
+    // This state might not be reachable if we redirect, 
+    // but kept as a fallback if redirection fails or logic changes.
     return (
       <div className="form-success">
         <h3>¡Mensaje Enviado!</h3>
