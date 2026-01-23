@@ -1,25 +1,26 @@
 
 export const prerender = false; // This is an API route, so it must not be prerendered
 
+import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-export const POST = async ({ request }) => {
-    const body = await request.json();
-    const { name, email, phone, company, service, message } = body;
+export const POST: APIRoute = async ({ request }) => {
+  const body = await request.json();
+  const { name, email, phone, company, service, message } = body;
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
-    if (!process.env.RESEND_API_KEY) {
-        return new Response(
-            JSON.stringify({
-                message: 'Missing RESEND_API_KEY',
-            }),
-            { status: 500 }
-        );
-    }
+  if (!process.env.RESEND_API_KEY) {
+    return new Response(
+      JSON.stringify({
+        message: 'Missing RESEND_API_KEY',
+      }),
+      { status: 500 }
+    );
+  }
 
-    // HTML content for the notification email (to the client)
-    const notificationHtml = `
+  // HTML content for the notification email (to the client)
+  const notificationHtml = `
     <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #1e3a8a;">Nuevo Contacto desde Limpik.cl</h2>
       <p><strong>Nombre:</strong> ${name}</p>
@@ -36,8 +37,8 @@ export const POST = async ({ request }) => {
     </div>
   `;
 
-    // HTML content for the simplified auto-reply email (to the user)
-    const autoReplyHtml = `
+  // HTML content for the simplified auto-reply email (to the user)
+  const autoReplyHtml = `
     <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
       <div style="text-align: center; margin-bottom: 20px;">
         <img src="https://limpik.cl/images/logo.png" alt="Limpik Logo" style="max-width: 150px; height: auto;" />
@@ -62,47 +63,47 @@ export const POST = async ({ request }) => {
     </div>
   `;
 
-    try {
-        // 1. Send notification to the client (Limpik)
-        const { error: errorAdmin } = await resend.emails.send({
-            from: 'Limpik Web <noreply@limpik.cl>', // Updated to use a generic sender
-            to: ['clientes@limpik.cl'],
-            subject: `Nuevo Contacto: ${company} - ${name}`,
-            html: notificationHtml,
-            replyTo: email,
-        });
+  try {
+    // 1. Send notification to the client (Limpik)
+    const { error: errorAdmin } = await resend.emails.send({
+      from: 'Limpik Web <noreply@limpik.cl>', // Updated to use a generic sender
+      to: ['clientes@limpik.cl'],
+      subject: `Nuevo Contacto: ${company} - ${name}`,
+      html: notificationHtml,
+      replyTo: email,
+    });
 
-        if (errorAdmin) {
-            console.error('Error sending admin email:', errorAdmin);
-            return new Response(JSON.stringify({ message: 'Error sending email', error: errorAdmin }), { status: 500 });
-        }
-
-        // 2. Send auto-reply to the user
-        // We don't block the response on this failure, but we log it.
-        const { error: errorUser } = await resend.emails.send({
-            from: 'Limpik Contacto <noreply@limpik.cl>',
-            to: [email],
-            subject: 'Hemos recibido su mensaje - Limpik',
-            html: autoReplyHtml,
-        });
-
-        if (errorUser) {
-            console.error('Error sending user auto-reply:', errorUser);
-        }
-
-        return new Response(
-            JSON.stringify({
-                message: 'Email sent successfully',
-            }),
-            { status: 200 }
-        );
-    } catch (e) {
-        console.error(e);
-        return new Response(
-            JSON.stringify({
-                message: e.message,
-            }),
-            { status: 500 }
-        );
+    if (errorAdmin) {
+      console.error('Error sending admin email:', errorAdmin);
+      return new Response(JSON.stringify({ message: 'Error sending email', error: errorAdmin }), { status: 500 });
     }
+
+    // 2. Send auto-reply to the user
+    // We don't block the response on this failure, but we log it.
+    const { error: errorUser } = await resend.emails.send({
+      from: 'Limpik Contacto <noreply@limpik.cl>',
+      to: [email],
+      subject: 'Hemos recibido su mensaje - Limpik',
+      html: autoReplyHtml,
+    });
+
+    if (errorUser) {
+      console.error('Error sending user auto-reply:', errorUser);
+    }
+
+    return new Response(
+      JSON.stringify({
+        message: 'Email sent successfully',
+      }),
+      { status: 200 }
+    );
+  } catch (e) {
+    console.error(e);
+    return new Response(
+      JSON.stringify({
+        message: e instanceof Error ? e.message : 'Unknown error',
+      }),
+      { status: 500 }
+    );
+  }
 };
