@@ -53,8 +53,6 @@ const SmartWhatsApp = () => {
             match = agentsConfig.community;
         } else if (path.includes('contacto') || path.includes('nosotros')) {
             match = agentsConfig.support;
-            // No menu for support pages, direct link behavior might be desired, 
-            // but we'll stick to menu for consistency unless it's ethics
         }
 
         setAgent(match);
@@ -65,7 +63,6 @@ const SmartWhatsApp = () => {
 
     const toggleMenu = () => {
         if (agent.id === 'ethics') {
-            // Ethics goes direct (privacy)
             window.open(`https://wa.me/${agent.phone}?text=${encodeURIComponent(agent.message)}`, '_blank');
         } else {
             setIsOpen(!isOpen);
