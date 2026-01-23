@@ -89,14 +89,14 @@ const SmartWhatsApp = () => {
         <div className={`whatsapp-bubble-container ${isVisible ? 'visible' : ''}`}>
             {/* Pre-Chat Menu */}
             <div className={`whatsapp-menu ${isOpen ? 'open' : ''}`}>
-                <button className="whatsapp-menu-item sales" onClick={() => handleOptionClick('sales')}>
+                <button className="whatsapp-menu-item sales tracking-whatsapp" onClick={() => handleOptionClick('sales')}>
                     <span className="icon">💰</span>
                     <div className="text">
                         <span className="title">Cotizar (Ventas)</span>
                         <span className="desc">Respuesta inmediata</span>
                     </div>
                 </button>
-                <button className="whatsapp-menu-item support" onClick={() => handleOptionClick('support')}>
+                <button className="whatsapp-menu-item support tracking-whatsapp" onClick={() => handleOptionClick('support')}>
                     <span className="icon">🆘</span>
                     <div className="text">
                         <span className="title">Ayuda / Cliente</span>
