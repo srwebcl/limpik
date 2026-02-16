@@ -72,20 +72,20 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
         />
       </div>
 
-      <div className="form-grid">
-        <div className="form-group">
-          <label htmlFor="email">Email Corporativo *</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="nombre@empresa.com"
-          />
-        </div>
+      <div className="form-group">
+        <label htmlFor="email">Email Corporativo *</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="nombre@empresa.com"
+        />
+      </div>
 
+      <div className="form-grid">
         <div className="form-group">
           <label htmlFor="phone">Teléfono *</label>
           <input
@@ -98,19 +98,19 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
             placeholder="+56 9 1234 5678"
           />
         </div>
-      </div>
 
-      <div className="form-group">
-        <label htmlFor="company">Empresa / Organización *</label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          required
-          value={formData.company}
-          onChange={handleChange}
-          placeholder="Nombre de su empresa"
-        />
+        <div className="form-group">
+          <label htmlFor="company">Empresa / Organización *</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            required
+            value={formData.company}
+            onChange={handleChange}
+            placeholder="Nombre de su empresa"
+          />
+        </div>
       </div>
 
       <div className="form-group">

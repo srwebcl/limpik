@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json();
-  const { name, email, phone, company, service, message } = body;
+  const { name, email, phone, company, service, message, type, attachments } = body;
 
   const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -19,19 +19,30 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // HTML content for the notification email (to the client)
+  // Determine recipient and subject based on type
+  let toEmail = ['clientes@limpik.cl'];
+  let subject = `Nuevo Contacto: ${company} - ${name}`;
+
+  if (type === 'recruitment') {
+    toEmail = ['rrhh@limpik.cl'];
+    subject = `Nueva Postulación: ${name}`;
+  }
+
+  // HTML content for the notification email (to the client/RRHH)
   const notificationHtml = `
     <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #1e3a8a;">Nuevo Contacto desde Limpik.cl</h2>
+      <h2 style="color: #1e3a8a;">${type === 'recruitment' ? 'Nueva Postulación' : 'Nuevo Contacto'} desde Limpik.cl</h2>
       <p><strong>Nombre:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Teléfono:</strong> ${phone}</p>
+      ${type === 'recruitment' ? `<p><strong>Experiencia:</strong> ${message}</p>` : `
       <p><strong>Empresa:</strong> ${company}</p>
       <p><strong>Servicio:</strong> ${service}</p>
       <p><strong>Mensaje:</strong></p>
       <blockquote style="background: #f9f9f9; padding: 15px; border-left: 4px solid #1e3a8a;">
         ${message}
       </blockquote>
+      `}
       <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
       <p style="font-size: 12px; color: #888;">Este correo fue enviado desde el formulario de contacto de Limpik.</p>
     </div>
@@ -45,15 +56,9 @@ export const POST: APIRoute = async ({ request }) => {
       </div>
       <h2 style="color: #1e3a8a; text-align: center;">¡Hemos recibido su mensaje!</h2>
       <p>Hola <strong>${name}</strong>,</p>
-      <p>Gracias por contactar a <strong>Limpik</strong>. Hemos recibido su solicitud correctamente y nuestro equipo comercial la revisará a la brevedad.</p>
-      <p>Nos pondremos en contacto con usted dentro de las próximas 24 horas hábiles para atender sus requerimientos de limpieza profesional.</p>
-      <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
-        <p style="margin: 0; font-weight: bold; color: #1e3a8a;">Resumen de su solicitud:</p>
-        <ul style="list-style: none; padding: 0;">
-          <li><strong>Servicio:</strong> ${service}</li>
-          <li><strong>Empresa:</strong> ${company}</li>
-        </ul>
-      </div>
+      <p>Gracias por contactar a <strong>Limpik</strong>. Hemos recibido su ${type === 'recruitment' ? 'postulación' : 'solicitud'} correctamente.</p>
+      <p>Nos pondremos en contacto con usted dentro de las próximas 24 horas hábiles.</p>
+      
       <p>Si tiene alguna urgencia, puede escribirnos directamente a nuestro WhatsApp.</p>
       <div style="text-align: center; margin-top: 30px;">
         <a href="https://limpik.cl" style="background-color: #ea580c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Visitar Sitio Web</a>
@@ -66,11 +71,12 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     // 1. Send notification to the client (Limpik)
     const { error: errorAdmin } = await resend.emails.send({
-      from: 'Limpik Web <noreply@limpik.cl>', // Updated to use a generic sender
-      to: ['clientes@limpik.cl'],
-      subject: `Nuevo Contacto: ${company} - ${name}`,
+      from: 'Limpik Web <noreply@limpik.cl>',
+      to: toEmail,
+      subject: subject,
       html: notificationHtml,
       replyTo: email,
+      attachments: attachments || [], // Pass attachments if present
     });
 
     if (errorAdmin) {
@@ -79,7 +85,6 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 2. Send auto-reply to the user
-    // We don't block the response on this failure, but we log it.
     const { error: errorUser } = await resend.emails.send({
       from: 'Limpik Contacto <noreply@limpik.cl>',
       to: [email],
