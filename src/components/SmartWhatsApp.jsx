@@ -5,31 +5,31 @@ import './SmartWhatsApp.css';
 const agentsConfig = {
     sales: {
         id: 'sales',
-        phone: '56990728582',
+        phone: '56984749397',
         message: 'Hola, me interesa el *Plan Empresas* ⚡. Quiero un presupuesto.',
         tooltip: '⚡ Presupuesto en 15 min'
     },
     community: {
         id: 'community',
-        phone: '56990728582',
+        phone: '56984749397',
         message: 'Hola, soy del comité/administración. Buscamos mejorar la limpieza del edificio.',
         tooltip: '⚡ Presupuesto en 15 min'
     },
     ethics: {
         id: 'ethics',
-        phone: '56990728582',
+        phone: '56984749397',
         message: 'Hola, deseo realizar una denuncia al Canal Ético.',
         tooltip: 'Canal Ético'
     },
     support: {
         id: 'support',
-        phone: '56990728582',
+        phone: '56984749397',
         message: 'Hola, soy cliente y necesito ayuda/soporte.',
         tooltip: 'Ayuda Clientes'
     },
     general: {
         id: 'general',
-        phone: '56990728582',
+        phone: '56984749397',
         message: 'Hola, vi su web y quiero que me asesoren con una cotización.',
         tooltip: '🔥 Cotización Rápida'
     }
