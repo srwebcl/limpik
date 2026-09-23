@@ -1,19 +1,52 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getImage, Image } from "astro:assets";
+import heroImg1 from "../../assets/images/limpieza-empresa-4.png";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { getCollection } from "astro:content";
+import { breadcrumbSchema, ORG_ID, SITE_URL } from "../../data/business";
 
-const posts = (await getCollection("blog")).sort(
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const title = "Noticias y Novedades | Limpik";
+const title = "Blog de Limpieza Corporativa y Consejos | Limpik";
 const description =
-    "Artículos sobre limpieza, mantenimiento y novedades de Limpik.";
+    "Guías y consejos sobre limpieza de oficinas y edificios, normativa laboral y mantención de espacios en Santiago y la costa de la V Región.";
+const schema = [
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": `${SITE_URL}/noticias#blog`,
+        name: "Noticias Limpik",
+        url: `${SITE_URL}/noticias`,
+        description,
+        inLanguage: "es-CL",
+        publisher: { "@id": ORG_ID },
+        blogPost: posts.map((post) => ({
+            "@type": "BlogPosting",
+            headline: post.data.title,
+            url: `${SITE_URL}/noticias/${post.slug}`,
+            datePublished: post.data.pubDate.toISOString(),
+        })),
+    },
+    breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Noticias", path: "/noticias" },
+    ]),
+];
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={schema}>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -22,7 +55,7 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/limpieza-empresa-4.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                 </div>
             </div>
@@ -58,9 +91,14 @@ const description =
                                     href={`/noticias/${post.slug}`}
                                     class="card-image-link"
                                 >
-                                    <img
+                                    <Image
                                         src={post.data.image}
-                                        alt={post.data.title}
+                                        widths={[400, 600, 800]}
+                                        sizes="(max-width: 700px) 100vw, 400px"
+                                        format="webp"
+                                        quality={70}
+                                        alt={post.data.imageAlt ?? post.data.title}
+                                        loading="lazy"
                                         class="card-image"
                                     />
                                 </a>

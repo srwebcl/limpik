@@ -1,15 +1,26 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getImage } from "astro:assets";
+import heroImg1 from "../assets/images/contacto.png";
+import { localBusinessSchemas } from "../data/business";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ContactForm from "../components/forms/ContactForm.jsx";
 
-const title = "Contacto | Limpik";
+const title = "Cotizar Servicio de Limpieza | Contacto Limpik";
 const description =
-    "Contáctenos para cotizaciones de limpieza, consultas generales o para trabajar con nosotros.";
+    "Solicite su cotización de limpieza y reciba respuesta en menos de 24 horas. Oficinas en Vitacura y Valparaíso. Teléfono +56 9 8474 9397.";
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={localBusinessSchemas}>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -18,7 +29,7 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/contacto.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                 </div>
             </div>

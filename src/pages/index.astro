@@ -4,9 +4,14 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
+import { localBusinessSchemas } from "../data/business";
+
+const title = "Empresa de Limpieza en Santiago y Viña del Mar | Limpik";
+const description =
+  "Servicio de limpieza para empresas, oficinas y edificios en Santiago, Viña del Mar, Valparaíso y Concón. Más de 18 años de experiencia. Cotice hoy.";
 ---
 
-<Layout title="Limpik - Soluciones Corporativas de Limpieza">
+<Layout title={title} description={description} schema={localBusinessSchemas}>
   <Header />
 
   <main>
@@ -37,7 +42,15 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
               <!-- Card 1: Empresas -->
               <a href="/servicios/limpieza-empresas" class="video-card">
                 <div class="video-wrapper">
-                  <video autoplay muted loop playsinline>
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/videos/limpieza-oficinas-poster.webp"
+                    data-lazy-video
+                    aria-hidden="true"
+                  >
                     <source
                       src="/videos/limpieza-oficinas.mp4"
                       type="video/mp4"
@@ -56,7 +69,15 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
               <!-- Card 2: Edificios -->
               <a href="/servicios/limpieza-edificios" class="video-card">
                 <div class="video-wrapper">
-                  <video autoplay muted loop playsinline>
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/videos/limpieza-edificios-poster.webp"
+                    data-lazy-video
+                    aria-hidden="true"
+                  >
                     <source
                       src="/videos/limpieza-edificios.mp4"
                       type="video/mp4"
@@ -65,9 +86,9 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
                 </div>
                 <div class="overlay"></div>
                 <div class="card-content">
-                  <span class="card-badge">Residencial</span>
+                  <span class="card-badge">Corporativo</span>
                   <h3>Limpieza de Edificios</h3>
-                  <p>Mantención integral de espacios comunes.</p>
+                  <p>Mantención integral de edificios corporativos.</p>
                   <span class="btn-glass-small">Ver Servicios &rarr;</span>
                 </div>
               </a>
@@ -141,8 +162,6 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
         </div>
       </div>
     </section>
-  </main>
-</Layout>
 
 <!-- Objection Handling / FAQ Section -->
 <section class="section faq-section">
@@ -355,7 +374,69 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
   </div>
 </section>
 
-<Footer />
+  </main>
+
+  <Footer />
+  <script>
+    // Use astro:page-load to support ViewTransitions navigation
+    document.addEventListener("astro:page-load", () => {
+      // Videos de tarjetas: se descargan y reproducen solo al entrar en pantalla
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const lazyVideos = document.querySelectorAll<HTMLVideoElement>(
+        "video[data-lazy-video]",
+      );
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        const videoObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const video = entry.target as HTMLVideoElement;
+              if (entry.isIntersecting) {
+                video.play().catch(() => {});
+              } else {
+                video.pause();
+              }
+            });
+          },
+          { rootMargin: "200px 0px" },
+        );
+        lazyVideos.forEach((video) => videoObserver.observe(video));
+      }
+  
+      const faqs = document.querySelectorAll(".faq-question");
+  
+      faqs.forEach((faq) => {
+        // Remove old listeners to prevent duplicates if the script runs multiple times
+        const newFaq = faq.cloneNode(true) as HTMLElement;
+        if (faq.parentNode) {
+          faq.parentNode.replaceChild(newFaq, faq);
+        }
+  
+        newFaq.addEventListener("click", () => {
+          const isExpanded = newFaq.getAttribute("aria-expanded") === "true";
+          const answer = newFaq.nextElementSibling as HTMLElement;
+  
+          // Close all others (Accordion behavior)
+          document.querySelectorAll(".faq-question").forEach((otherFaq) => {
+            if (otherFaq !== newFaq) {
+              otherFaq.setAttribute("aria-expanded", "false");
+              (otherFaq.nextElementSibling as HTMLElement).style.maxHeight = "";
+            }
+          });
+  
+          // Toggle current
+          newFaq.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
+          if (!isExpanded) {
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          } else {
+            answer.style.maxHeight = "";
+          }
+        });
+      });
+    });
+  </script>
+</Layout>
 
 <style>
   /* Immersive Drift Layout Styles */
@@ -747,11 +828,12 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
     color: white !important;
   }
 
+  /* Bento Grid */
   .bento-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 Columns Uniform */
-    gap: 2rem;
-    max-width: 1000px;
+    grid-template-columns: repeat(4, 1fr); /* 4 Columns */
+    gap: 1.5rem;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
@@ -845,16 +927,26 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
   /* Subtle Location Highlight */
   .text-highlight {
     color: white;
-    font-weight: 700; /* Bold */
-    font-size: 1.1em; /* Slightly larger */
+    font-weight: 700;
+    font-size: 1.1em;
     white-space: normal;
+  }
+
+  /* Responsive Grid */
+  @media (max-width: 1024px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Stack on mobile */
   @media (max-width: 900px) {
-    .bento-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   /* --- High-Conversion CTA Section --- */
@@ -1243,31 +1335,3 @@ import ContactForm from "../components/forms/ContactForm.jsx"; // Import Form
   }
 </style>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const faqs = document.querySelectorAll(".faq-question");
-
-    faqs.forEach((faq) => {
-      faq.addEventListener("click", () => {
-        const isExpanded = faq.getAttribute("aria-expanded") === "true";
-        const answer = faq.nextElementSibling as HTMLElement;
-
-        // Close all others (Accordion behavior)
-        faqs.forEach((otherFaq) => {
-          if (otherFaq !== faq) {
-            otherFaq.setAttribute("aria-expanded", "false");
-            (otherFaq.nextElementSibling as HTMLElement).style.maxHeight = "";
-          }
-        });
-
-        // Toggle current
-        faq.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
-        if (!isExpanded) {
-          answer.style.maxHeight = answer.scrollHeight + "px";
-        } else {
-          answer.style.maxHeight = "";
-        }
-      });
-    });
-  });
-</script>

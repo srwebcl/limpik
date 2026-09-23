@@ -25,9 +25,9 @@
   --color-border: #e2e8f0;
 
   /* Typography */
-  --font-heading: 'Outfit', sans-serif;
+  --font-heading: 'Outfit Variable', 'Outfit', sans-serif;
   /* Modern, Geometric */
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
   /* Clean, Readable */
 
   /* Spacing & Layout */

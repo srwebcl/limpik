@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PrivacyConsent, { Honeypot, PRIVACY_POLICY_VERSION } from './PrivacyConsent.jsx';
+import { business } from '../../data/business';
 
 export default function ComplaintForm() {
     const [formData, setFormData] = useState({
@@ -12,7 +14,10 @@ export default function ComplaintForm() {
         description: '',
         anonymous: false
     });
-    const [success, setSuccess] = useState(false);
+    const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+    const [folio, setFolio] = useState('');
+    const [acknowledged, setAcknowledged] = useState(false);
+    const [website, setWebsite] = useState('');
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -22,20 +27,61 @@ export default function ComplaintForm() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Simulate API submission
-        console.log('Complaint submitted:', formData);
-        setTimeout(() => setSuccess(true), 1000);
+        setStatus('submitting');
+
+        // En una denuncia anónima no se envía ningún dato de identificación
+        const payload = formData.anonymous
+            ? {
+                anonymous: true,
+                incidentType: formData.incidentType,
+                incidentDate: formData.incidentDate,
+                description: formData.description,
+            }
+            : formData;
+
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...payload,
+                    type: 'complaint',
+                    website,
+                    consent: { privacy: acknowledged, policyVersion: PRIVACY_POLICY_VERSION },
+                }),
+            });
+            const data = await response.json().catch(() => ({}));
+            if (response.ok) {
+                setFolio(data.folio || '');
+                setStatus('success');
+            } else {
+                setStatus('error');
+            }
+        } catch {
+            setStatus('error');
+        }
     };
 
-    if (success) {
+    if (status === 'success') {
         return (
             <div className="success-message">
                 <h3>Denuncia Recibida</h3>
+                {folio && <p>Su número de folio es <strong>{folio}</strong>. Guárdelo como referencia.</p>}
                 <p>Hemos recibido su denuncia. Un encargado de cumplimiento se pondrá en contacto a la brevedad dentro de los plazos legales establecidos.</p>
                 <p>La confidencialidad de este reporte está garantizada.</p>
-                <button onClick={() => setSuccess(false)} className="btn-reset">Ingresar otra denuncia</button>
+                <button
+                    onClick={() => {
+                        setStatus('idle');
+                        setFolio('');
+                        setAcknowledged(false);
+                        setFormData({ fullName: '', rut: '', email: '', phone: '', relation: '', incidentDate: '', incidentType: '', description: '', anonymous: false });
+                    }}
+                    className="btn-reset"
+                >
+                    Ingresar otra denuncia
+                </button>
             </div>
         );
     }
@@ -127,7 +173,22 @@ export default function ComplaintForm() {
                 ></textarea>
             </div>
 
-            <button type="submit" className="btn-submit-alert">Enviar Denuncia Confidencial</button>
+            <PrivacyConsent
+                id="privacy-complaint"
+                checked={acknowledged}
+                onChange={setAcknowledged}
+                purpose="recibir, investigar y resolver su denuncia, en cumplimiento de la Ley N° 21.643 (Ley Karin). Solo acceden las personas a cargo de la investigación. Incluya únicamente los datos de terceros necesarios para describir los hechos."
+                label={<>Declaro haber leído la información sobre el tratamiento de mis datos y la <a href="/politica-de-privacidad" target="_blank" rel="noopener">Política de Privacidad</a>.</>}
+            />
+            <Honeypot value={website} onChange={setWebsite} />
+
+            <button type="submit" className="btn-submit-alert" disabled={status === 'submitting' || !acknowledged}>
+                {status === 'submitting' ? 'Enviando...' : 'Enviar Denuncia Confidencial'}
+            </button>
+
+            {status === 'error' && (
+                <p className="error-msg">No pudimos enviar su denuncia. Intente nuevamente o escriba a {business.complaintsEmail}.</p>
+            )}
 
             <style>{`
         .complaint-form {
@@ -189,8 +250,19 @@ export default function ComplaintForm() {
             transition: background 0.2s;
         }
         
-        .btn-submit-alert:hover {
+        .btn-submit-alert:hover:not(:disabled) {
             background: #c53030;
+        }
+
+        .btn-submit-alert:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-msg {
+            color: #e53e3e;
+            margin-top: 1rem;
+            font-size: 0.9rem;
         }
 
         .success-message {

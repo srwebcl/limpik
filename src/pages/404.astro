@@ -1,0 +1,136 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "Página no encontrada | Limpik";
+const description =
+    "La página que busca no existe o fue movida. Revise nuestros servicios de limpieza para empresas y edificios.";
+---
+
+<Layout title={title} description={description} noindex>
+    <Header />
+
+    <main class="main-content-spaced">
+        <section class="section-not-found">
+            <div class="container">
+                <div class="content-box">
+                    <span class="code">404</span>
+                    <h1>Página no encontrada</h1>
+                    <p>
+                        La página que busca no existe o fue movida. Estos
+                        enlaces pueden ayudarle:
+                    </p>
+                    <ul class="links">
+                        <li>
+                            <a href="/servicios/limpieza-empresas"
+                                >Limpieza de Empresas</a
+                            >
+                        </li>
+                        <li>
+                            <a href="/servicios/limpieza-edificios"
+                                >Limpieza de Edificios</a
+                            >
+                        </li>
+                        <li><a href="/noticias">Noticias</a></li>
+                        <li><a href="/contacto">Contacto</a></li>
+                    </ul>
+                    <div class="actions">
+                        <a href="/" class="btn-home">Volver al Inicio</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .section-not-found {
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8fafc;
+        padding: 4rem 0;
+    }
+
+    .content-box {
+        background: white;
+        padding: 4rem 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid var(--color-border);
+    }
+
+    .code {
+        display: block;
+        font-size: 4rem;
+        font-weight: 800;
+        color: var(--color-secondary);
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    p {
+        color: var(--color-text-main);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .links {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem 1.5rem;
+    }
+
+    .links a {
+        color: var(--color-primary);
+        font-weight: 600;
+    }
+
+    .btn-home {
+        display: inline-block;
+        background-color: var(--color-secondary);
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.3);
+    }
+
+    .btn-home:hover {
+        background-color: #ea580c;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.4);
+    }
+
+    @media (max-width: 600px) {
+        .content-box {
+            padding: 3rem 1.5rem;
+            margin: 0 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+    }
+</style>

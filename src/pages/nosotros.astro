@@ -1,14 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getImage, Image } from "astro:assets";
+import aboutImg from "../assets/images/limpieza-empresa-3.png";
+import heroImg1 from "../assets/images/limpieza-empresa-2.png";
+import { breadcrumbSchema } from "../data/business";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-const title = "Nosotros | Limpik";
+const title = "Quiénes Somos: 18 Años en Limpieza Corporativa | Limpik";
 const description =
-    "Conozca más sobre Limpik, empresa líder en limpieza corporativa con más de 18 años de experiencia. Misión, Visión y Valores.";
+    "Limpik es una empresa chilena con más de 18 años en limpieza corporativa. Supervisión profesional, tecnología y capital humano. Misión y valores.";
+const schema = breadcrumbSchema([
+    { name: "Inicio", path: "/" },
+    { name: "Nosotros", path: "/nosotros" },
+]);
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={schema}>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -17,7 +33,7 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/limpieza-empresa-2.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                 </div>
             </div>
@@ -86,10 +102,15 @@ const description =
                     </div>
                     <div class="col image-col">
                         <div class="image-wrapper">
-                            <img
-                                src="/images/limpieza-empresa-3.png"
+                            <Image
+                                src={aboutImg}
                                 alt="Equipo Limpik trabajando"
                                 class="about-image"
+                                widths={[480, 720, 1000]}
+                                sizes="(max-width: 900px) 100vw, 50vw"
+                                format="webp"
+                                quality={75}
+                                loading="lazy"
                             />
                             <div class="image-decoration"></div>
                         </div>

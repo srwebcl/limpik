@@ -1,0 +1,154 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { business } from "../data/business";
+---
+
+<LegalLayout
+    title="Política de Cookies | Limpik"
+    heading="Política de Cookies"
+    description="Qué cookies usa limpik.cl, para qué sirven, cuánto duran y cómo aceptar, rechazar o cambiar su elección en cualquier momento."
+    updated="23 de septiembre de 2026"
+>
+    <div class="legal-box">
+        <p>
+            Solo usamos cookies necesarias para el funcionamiento del sitio. Las
+            cookies de publicidad de Google Ads <strong
+                >se activan únicamente si usted las acepta</strong
+            >; mientras no lo haga, Google Tag Manager ni siquiera se carga.
+        </p>
+        <p style="margin-bottom:0">
+            <button type="button" class="btn-cookie-settings" data-cookie-settings
+                >Cambiar mi configuración de cookies</button
+            >
+        </p>
+    </div>
+
+    <h2 id="que-son">1. ¿Qué son las cookies?</h2>
+    <p>
+        Las cookies son pequeños archivos que un sitio web guarda en su
+        navegador. Tecnologías similares, como el almacenamiento local del
+        navegador (<em>localStorage</em>), cumplen funciones parecidas. En esta
+        política llamamos "cookies" a todas ellas.
+    </p>
+
+    <h2 id="tipos">2. Cookies que usamos</h2>
+
+    <h3>Necesarias (siempre activas)</h3>
+    <p>
+        Son indispensables para que el sitio funcione y para recordar su
+        elección sobre cookies. No requieren consentimiento y no se usan para
+        publicidad.
+    </p>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Proveedor</th>
+                    <th>Finalidad</th>
+                    <th>Duración</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>limpik_consent</code> (localStorage)</td>
+                    <td>limpik.cl</td>
+                    <td>Guarda su elección sobre cookies.</td>
+                    <td>12 meses</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Publicidad y medición (requieren su consentimiento)</h3>
+    <p>
+        Nos permiten saber si una visita que llegó desde un anuncio de Google
+        terminó en una solicitud de cotización o en un contacto, para medir la
+        efectividad de nuestras campañas. No las usamos para crear perfiles
+        propios de los visitantes.
+    </p>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Proveedor</th>
+                    <th>Finalidad</th>
+                    <th>Duración</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>_gcl_au</code></td>
+                    <td>Google Ads (Google LLC)</td>
+                    <td>Relaciona visitas y conversiones con los anuncios.</td>
+                    <td>90 días</td>
+                </tr>
+                <tr>
+                    <td><code>_gcl_aw</code>, <code>_gcl_gs</code></td>
+                    <td>Google Ads (Google LLC)</td>
+                    <td>
+                        Guardan el identificador del clic en un anuncio para
+                        atribuir la conversión.
+                    </td>
+                    <td>90 días</td>
+                </tr>
+                <tr>
+                    <td>Cookies de dominios de Google (p. ej. <code>IDE</code>, <code>test_cookie</code>)</td>
+                    <td>Google LLC (doubleclick.net, google.com)</td>
+                    <td>
+                        Medición de conversiones y funcionamiento de la
+                        plataforma publicitaria.
+                    </td>
+                    <td>Desde 15 minutos hasta 13 meses</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        Google trata estos datos conforme a su propia política de privacidad: <a
+            href="https://policies.google.com/privacy?hl=es"
+            target="_blank"
+            rel="noopener noreferrer">policies.google.com/privacy</a
+        >. Puede que los datos se procesen en servidores fuera de Chile. Ver la
+        sección de transferencias internacionales de nuestra <a
+            href="/politica-de-privacidad#transferencias"
+            >Política de Privacidad</a
+        >.
+    </p>
+
+    <h2 id="gestion">3. Cómo aceptar, rechazar o cambiar su elección</h2>
+    <ul>
+        <li>
+            La primera vez que visita el sitio le mostramos un aviso con las
+            opciones <strong>Aceptar</strong>, <strong>Rechazar</strong> y
+            <strong>Configurar</strong>. Rechazar es tan fácil como aceptar, y el
+            sitio funciona igual en ambos casos.
+        </li>
+        <li>
+            Puede cambiar o revocar su elección cuando quiera con el enlace
+            "Configuración de cookies" al pie de cada página o con el botón al
+            inicio de esta política. Si revoca el consentimiento, eliminamos las
+            cookies de publicidad de nuestro dominio.
+        </li>
+        <li>
+            Le volveremos a preguntar cada 12 meses, o antes si cambian las
+            cookies que usamos.
+        </li>
+        <li>
+            También puede bloquear o borrar cookies desde la configuración de su
+            navegador, aunque en ese caso deberemos preguntarle de nuevo por su
+            elección.
+        </li>
+    </ul>
+
+    <h2 id="contacto">4. Contacto</h2>
+    <p>
+        Si tiene dudas sobre esta política o quiere ejercer sus derechos sobre
+        datos personales, escriba a <a href={`mailto:${business.privacyEmail}`}
+            >{business.privacyEmail}</a
+        >. Más información en nuestra <a href="/politica-de-privacidad"
+            >Política de Privacidad</a
+        >.
+    </p>
+</LegalLayout>

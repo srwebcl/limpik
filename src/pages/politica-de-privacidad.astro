@@ -1,0 +1,388 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { business } from "../data/business";
+
+const [santiago, valparaiso] = business.locations;
+---
+
+<LegalLayout
+    title="Política de Privacidad y Protección de Datos | Limpik"
+    heading="Política de Privacidad"
+    description="Cómo Limpik trata sus datos personales conforme a la Ley N° 21.719: responsable, finalidades, bases legales, plazos de conservación y cómo ejercer sus derechos."
+    updated="23 de septiembre de 2026"
+>
+    <div class="legal-box">
+        <p>
+            En <strong>{business.name}</strong> tratamos sus datos personales con
+            respeto, transparencia y seguridad, conforme a la Ley N° 19.628 sobre
+            Protección de la Vida Privada, modificada por la <strong
+                >Ley N° 21.719</strong
+            >, que regula la protección y el tratamiento de los datos personales
+            y crea la Agencia de Protección de Datos Personales.
+        </p>
+        <p style="margin-bottom:0">
+            Para ejercer sus derechos escriba a <a
+                href={`mailto:${business.privacyEmail}`}
+                >{business.privacyEmail}</a
+            >.
+        </p>
+    </div>
+
+    <nav class="legal-toc" aria-label="Contenido">
+        <strong>Contenido</strong>
+        <ol>
+            <li><a href="#responsable">Responsable del tratamiento</a></li>
+            <li><a href="#datos">Datos que tratamos</a></li>
+            <li><a href="#finalidades">Finalidades y bases de licitud</a></li>
+            <li><a href="#sensibles">Datos sensibles</a></li>
+            <li><a href="#destinatarios">Destinatarios y encargados</a></li>
+            <li><a href="#transferencias">Transferencias internacionales</a></li>
+            <li><a href="#conservacion">Plazos de conservación</a></li>
+            <li><a href="#derechos">Sus derechos</a></li>
+            <li><a href="#ejercicio">Cómo ejercerlos</a></li>
+            <li><a href="#seguridad">Seguridad</a></li>
+            <li><a href="#menores">Menores de edad</a></li>
+            <li><a href="#cookies">Cookies</a></li>
+            <li><a href="#cambios">Cambios a esta política</a></li>
+        </ol>
+    </nav>
+
+    <h2 id="responsable">1. Responsable del tratamiento</h2>
+    <ul>
+        <li><strong>Razón social:</strong> {business.legalName}</li>
+        <li><strong>Nombre comercial:</strong> {business.name}</li>
+        <li><strong>RUT:</strong> {business.rut}</li>
+        <li>
+            <strong>Oficinas:</strong>
+            {santiago.streetAddress}, {santiago.addressLocality}, {
+                santiago.addressRegion
+            }; y {valparaiso.streetAddress}, {valparaiso.addressLocality}, {
+                valparaiso.addressRegion
+            }, Chile.
+        </li>
+        <li>
+            <strong>Contacto para protección de datos:</strong>
+            <a href={`mailto:${business.privacyEmail}`}
+                >{business.privacyEmail}</a
+            >
+        </li>
+        <li>
+            <strong>Teléfono:</strong>
+            <a href={`tel:${business.telephone}`}>+56 9 8474 9397</a>
+        </li>
+    </ul>
+
+    <h2 id="datos">2. Datos personales que tratamos</h2>
+    <p>
+        Solo recolectamos los datos necesarios para cada finalidad (principio de
+        proporcionalidad y minimización). Según cómo interactúe con nosotros:
+    </p>
+    <ul>
+        <li>
+            <strong>Formulario de cotización o contacto:</strong> nombre, email, teléfono,
+            empresa u organización, dirección donde se requiere el servicio y los
+            detalles de su requerimiento (dotación, horario, frecuencia, metros cuadrados
+            y mensaje).
+        </li>
+        <li>
+            <strong>Formulario "Trabaje con Nosotros":</strong> nombre, email, teléfono,
+            presentación o experiencia laboral y, si lo adjunta, su currículum vitae.
+        </li>
+        <li>
+            <strong>Canal de Denuncias (Ley Karin):</strong> si no elige la opción
+            anónima, nombre, RUT, email, teléfono y relación con la empresa; en todos
+            los casos, el tipo y la fecha del incidente y la descripción de los hechos,
+            que puede incluir datos de terceros involucrados o testigos.
+        </li>
+        <li>
+            <strong>Comunicaciones directas:</strong> los datos que usted nos entregue
+            al escribirnos por email, WhatsApp o al llamarnos.
+        </li>
+        <li>
+            <strong>Navegación:</strong> solo si usted lo autoriza, identificadores
+            de cookies de publicidad de Google Ads. Ver la <a
+                href="/politica-de-cookies">Política de Cookies</a
+            >.
+        </li>
+    </ul>
+    <p>
+        No realizamos decisiones basadas únicamente en tratamientos automatizados,
+        incluida la elaboración de perfiles, que produzcan efectos jurídicos o le
+        afecten significativamente.
+    </p>
+
+    <h2 id="finalidades">3. Finalidades y bases de licitud</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Finalidad</th>
+                    <th>Base de licitud</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Responder su solicitud, preparar y enviar cotizaciones,
+                        y hacer seguimiento comercial de esa solicitud.
+                    </td>
+                    <td>
+                        Su consentimiento, otorgado al enviar el formulario, y
+                        la ejecución de medidas precontractuales solicitadas por
+                        usted.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Prestar los servicios contratados y administrar la relación comercial y la facturación.</td>
+                    <td>Ejecución del contrato y cumplimiento de obligaciones legales (tributarias y laborales).</td>
+                </tr>
+                <tr>
+                    <td>
+                        Evaluar su postulación en procesos de selección de
+                        personal.
+                    </td>
+                    <td>
+                        Su consentimiento. La conservación para procesos futuros
+                        requiere un consentimiento adicional y opcional.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Recibir, investigar y resolver denuncias de acoso
+                        laboral, acoso sexual y violencia en el trabajo.
+                    </td>
+                    <td>
+                        Cumplimiento de una obligación legal: Ley N° 21.643 (Ley
+                        Karin) y Código del Trabajo.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Medir la efectividad de nuestras campañas de publicidad
+                        en Google Ads.
+                    </td>
+                    <td>
+                        Su consentimiento, otorgado en el banner de cookies y
+                        revocable en cualquier momento.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Mantener la seguridad del sitio y prevenir abusos o
+                        envíos fraudulentos.
+                    </td>
+                    <td>Interés legítimo del responsable.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        Cuando el tratamiento se basa en su consentimiento, usted puede
+        revocarlo en cualquier momento, sin efecto retroactivo, escribiendo a <a
+            href={`mailto:${business.privacyEmail}`}>{business.privacyEmail}</a
+        > o, en el caso de las cookies, desde la opción "Configuración de cookies"
+        al pie de cada página.
+    </p>
+
+    <h2 id="sensibles">4. Datos sensibles</h2>
+    <p>
+        No solicitamos datos sensibles (por ejemplo, datos de salud, origen
+        étnico, afiliación sindical, convicciones religiosas o vida sexual). Le
+        pedimos no incluirlos en su currículum ni en los mensajes que nos envíe.
+    </p>
+    <p>
+        En el Canal de Denuncias, por la naturaleza de los hechos denunciados,
+        pueden aparecer datos sensibles. Esos datos se tratan exclusivamente para
+        la investigación y resolución de la denuncia, con acceso restringido al
+        personal a cargo y bajo estricta confidencialidad, según exige la
+        normativa laboral.
+    </p>
+
+    <h2 id="destinatarios">5. Destinatarios y encargados del tratamiento</h2>
+    <p>
+        No vendemos ni cedemos sus datos personales. Solo los comunicamos a
+        terceros en los siguientes casos:
+    </p>
+    <ul>
+        <li>
+            <strong>Proveedores que tratan datos por cuenta nuestra
+            (encargados):</strong> Vercel Inc. (alojamiento del sitio web), Resend
+            (envío de los correos generados por los formularios), nuestro proveedor
+            de correo electrónico corporativo y, si usted lo autoriza, Google LLC
+            (Google Ads y Google Tag Manager). Estos proveedores actúan según nuestras
+            instrucciones y bajo obligaciones de confidencialidad y seguridad.
+        </li>
+        <li>
+            <strong>WhatsApp:</strong> si nos contacta por WhatsApp, esa comunicación
+            también se rige por las condiciones y la política de privacidad de WhatsApp
+            (Meta Platforms).
+        </li>
+        <li>
+            <strong>Autoridades:</strong> cuando la ley lo exija, por ejemplo, la
+            Dirección del Trabajo respecto de denuncias de la Ley Karin, o los tribunales
+            de justicia.
+        </li>
+    </ul>
+
+    <h2 id="transferencias">6. Transferencias internacionales</h2>
+    <p>
+        Algunos de los proveedores mencionados almacenan o procesan datos en
+        servidores ubicados fuera de Chile, principalmente en Estados Unidos. En
+        esos casos exigimos garantías adecuadas de protección, como cláusulas
+        contractuales de protección de datos, conforme a lo que permite la Ley
+        N° 21.719.
+    </p>
+
+    <h2 id="conservacion">7. Plazos de conservación</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de datos</th>
+                    <th>Plazo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Solicitudes de cotización que no se convierten en contrato</td>
+                    <td>24 meses desde la última comunicación.</td>
+                </tr>
+                <tr>
+                    <td>Datos de clientes</td>
+                    <td>
+                        Mientras dure la relación comercial y, después, durante
+                        los plazos que exijan las obligaciones legales y
+                        tributarias o la prescripción de acciones.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Postulaciones laborales</td>
+                    <td>
+                        6 meses desde su recepción; o 24 meses si usted autorizó
+                        que las conservemos para futuros procesos.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Denuncias (Ley Karin)</td>
+                    <td>
+                        Durante la investigación y la adopción de medidas, y
+                        luego por el tiempo necesario para cumplir obligaciones
+                        legales y responder a eventuales acciones judiciales o
+                        administrativas.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cookies</td>
+                    <td>
+                        Según se indica en la <a href="/politica-de-cookies"
+                            >Política de Cookies</a
+                        >.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        Cumplidos estos plazos, los datos se eliminan o se anonimizan de forma
+        irreversible.
+    </p>
+
+    <h2 id="derechos">8. Sus derechos</h2>
+    <p>Conforme a la Ley N° 21.719, usted tiene derecho a:</p>
+    <ul>
+        <li>
+            <strong>Acceso:</strong> saber si tratamos sus datos, cuáles son, su origen,
+            finalidades, destinatarios y plazo de conservación.
+        </li>
+        <li>
+            <strong>Rectificación:</strong> corregir datos inexactos, desactualizados
+            o incompletos.
+        </li>
+        <li>
+            <strong>Supresión:</strong> solicitar la eliminación de sus datos cuando
+            ya no sean necesarios, haya revocado su consentimiento o se hayan tratado
+            ilícitamente, salvo las excepciones legales.
+        </li>
+        <li>
+            <strong>Oposición:</strong> oponerse a un tratamiento específico, incluido
+            el realizado con fines de marketing directo.
+        </li>
+        <li>
+            <strong>Portabilidad:</strong> recibir los datos que nos entregó en un
+            formato estructurado, de uso común y lectura mecánica, y transmitirlos
+            a otro responsable.
+        </li>
+        <li>
+            <strong>Bloqueo:</strong> solicitar la suspensión temporal del tratamiento
+            mientras se resuelve una solicitud de rectificación, supresión u oposición.
+        </li>
+        <li>
+            <strong>No ser objeto de decisiones automatizadas</strong> que le afecten
+            significativamente.
+        </li>
+        <li>
+            <strong>Revocar su consentimiento</strong> en cualquier momento.
+        </li>
+    </ul>
+
+    <h2 id="ejercicio">9. Cómo ejercer sus derechos</h2>
+    <ol>
+        <li>
+            Escriba a <a href={`mailto:${business.privacyEmail}`}
+                >{business.privacyEmail}</a
+            > indicando su nombre, el derecho que desea ejercer y, si corresponde,
+            los datos a los que se refiere su solicitud.
+        </li>
+        <li>
+            Podremos pedirle información adicional razonable para verificar su
+            identidad y proteger sus datos frente a solicitudes de terceros.
+        </li>
+        <li>
+            Responderemos dentro de <strong>30 días corridos</strong> desde la recepción
+            de su solicitud, plazo que podrá prorrogarse por única vez hasta por
+            30 días corridos adicionales, informándole el motivo.
+        </li>
+        <li>El ejercicio de estos derechos es gratuito.</li>
+    </ol>
+    <p>
+        Si su solicitud es rechazada o no recibe respuesta dentro de plazo,
+        puede presentar un reclamo ante la <strong
+            >Agencia de Protección de Datos Personales</strong
+        >.
+    </p>
+
+    <h2 id="seguridad">10. Seguridad de la información</h2>
+    <p>
+        Aplicamos medidas técnicas y organizativas apropiadas para proteger sus
+        datos contra el acceso no autorizado, la pérdida, la alteración o la
+        divulgación: cifrado de las comunicaciones (HTTPS), acceso restringido
+        según función, identificación confidencial de las denuncias, y
+        proveedores con estándares reconocidos de seguridad. Si ocurre una
+        vulneración de seguridad que afecte sus datos, la notificaremos a la
+        Agencia de Protección de Datos Personales y, cuando corresponda, a los
+        titulares afectados, conforme a la ley.
+    </p>
+
+    <h2 id="menores">11. Menores de edad</h2>
+    <p>
+        Este sitio está dirigido a empresas, administradores de edificios y
+        personas adultas. No recolectamos intencionalmente datos de menores de
+        edad. Para postular a un empleo se debe ser mayor de 18 años.
+    </p>
+
+    <h2 id="cookies">12. Cookies</h2>
+    <p>
+        Usamos cookies necesarias y, solo con su consentimiento, cookies de
+        publicidad. El detalle, sus plazos y cómo cambiar su elección están en
+        la <a href="/politica-de-cookies">Política de Cookies</a>.
+    </p>
+
+    <h2 id="cambios">13. Cambios a esta política</h2>
+    <p>
+        Podemos actualizar esta política para reflejar cambios legales o en
+        nuestros tratamientos. Publicaremos la versión vigente en esta página,
+        con su fecha de actualización. Si el cambio es relevante y afecta
+        tratamientos basados en su consentimiento, se lo informaremos y, cuando
+        corresponda, le pediremos un nuevo consentimiento.
+    </p>
+</LegalLayout>

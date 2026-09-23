@@ -1,15 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getImage, Image } from "astro:assets";
+import ctaImg from "../../assets/images/limpieza-edificios-5.jpg";
+import heroImg1 from "../../assets/images/limpieza-edificios-1.jpg";
+import heroImg2 from "../../assets/images/limpieza-edificios-2.png";
+import heroImg3 from "../../assets/images/limpieza-edificios-7.png";
+import { serviceSchema, breadcrumbSchema } from "../../data/business";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import ContactForm from "../../components/forms/ContactForm.jsx";
 
-const title = "Limpieza de Edificios y Comunidades | Limpik";
+const title = "Limpieza de Edificios Corporativos y Residenciales | Limpik";
 const description =
-    "Mantenimiento de aseo especializado para edificios residenciales, corporativos y comunidades. Confíe la limpieza de sus espacios comunes a expertos.";
+    "Limpieza de edificios corporativos y espacios comunes de edificios residenciales en Santiago y la V Región. Personal calificado, reemplazos y supervisión.";
+const path = "/servicios/limpieza-edificios";
+const schema = [
+    serviceSchema({
+        name: "Limpieza de Edificios",
+        description,
+        path,
+        serviceType: "Limpieza de edificios corporativos y residenciales",
+    }),
+    breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Limpieza de Edificios", path },
+    ]),
+];
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
+const heroImg2Bg = await getImage({ src: heroImg2, format: "webp", width: 1600, quality: 70 });
+const heroImg3Bg = await getImage({ src: heroImg3, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout
+    title={title}
+    description={description}
+    image="/og/limpieza-edificios.jpg"
+    imageAlt="Servicio de limpieza de edificios Limpik"
+    schema={schema}
+>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -19,17 +54,17 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/limpieza-edificios-1.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                 </div>
                 <div
                     class="slide"
-                    style="background-image: url('/images/limpieza-edificios-2.png')"
+                    style={`background-image: url('${heroImg2Bg.src}')`}
                 >
                 </div>
                 <div
                     class="slide"
-                    style="background-image: url('/images/limpieza-edificios-7.png')"
+                    style={`background-image: url('${heroImg3Bg.src}')`}
                 >
                 </div>
             </div>
@@ -41,26 +76,23 @@ const description =
                             >Limpieza Especializada para</span
                         >
                         <span class="title-line title-highlight"
-                            >SU COMUNIDAD</span
+                            >SU EDIFICIO CORPORATIVO</span
                         >
                         <span class="title-line title-bottom"
-                            >y Espacios Comunes</span
+                            >e Instalaciones</span
                         >
                     </h1>
 
                     <p class="hero-description">
-                        Expertos en mantenimiento de edificios residenciales y
-                        condominios en Santiago y V Región. Garantizamos
-                        ambientes impecables para la tranquilidad de sus
-                        residentes.
+                        Expertos en limpieza y mantenimiento de edificios corporativos en
+                        Santiago y V Región. Proveemos personal externo calificado para que
+                        su empresa opere en un ambiente impecable.
                     </p>
 
                     <div class="hero-actions">
                         <a
-                            href="https://wa.me/56984749397?text=Hola,%20me%20interesa%20un%20presupuesto%20para%20limpieza%20de%20edificios"
+                            href="#cotizar"
                             class="btn-strategic"
-                            target="_blank"
-                            rel="noopener noreferrer"
                         >
                             <svg
                                 width="24"
@@ -89,13 +121,13 @@ const description =
                         <h2 class="section-title">
                             Más que limpieza, <br />
                             <span class="text-highlight-blue"
-                                >bienestar residencial.</span
+                                >imagen corporativa.</span
                             >
                         </h2>
                         <p class="lead-text">
-                            Un edificio cuidado es un hogar mejor valorado. En
-                            Limpik nos ocupamos de los detalles operativos para
-                            que su comunidad disfrute de espacios impecables.
+                            Un edificio corporativo impecable es el reflejo de su empresa. 
+                            En Limpik nos ocupamos de la gestión del personal de limpieza para que 
+                            usted se enfoque en su negocio.
                         </p>
                     </div>
 
@@ -106,7 +138,7 @@ const description =
                             <h3>Personal de Confianza</h3>
                             <p>
                                 Reclutamiento riguroso y antecedentes
-                                verificados para seguridad de los residentes.
+                                verificados para seguridad de su empresa.
                             </p>
                         </div>
                         <div class="feature-card highlight">
@@ -122,15 +154,15 @@ const description =
                             <h3>Supervisión Activa</h3>
                             <p>
                                 Visitas periódicas y control de calidad para
-                                asegurar el estándar prometido.
+                                asegurar el estándar corporativo.
                             </p>
                         </div>
                         <div class="feature-card">
                             <div class="icon">🌿</div>
-                            <h3>Productos Certificados</h3>
+                            <h3>Insumos Especializados</h3>
                             <p>
-                                Insumos de alta calidad, seguros para mascotas y
-                                niños.
+                                Uso de maquinaria, productos industriales y ecológicos
+                                para un alto estándar de higiene.
                             </p>
                         </div>
                     </div>
@@ -140,14 +172,14 @@ const description =
                         <h3>Áreas de Atención:</h3>
                         <div class="sector-pills">
                             <span class="sector-pill">🏢 Hall de Acceso</span>
-                            <span class="sector-pill">🚲 Bicicleteros</span>
-                            <span class="sector-pill">🚮 Salas de Basura</span>
-                            <span class="sector-pill">🛋️ Salas de Eventos</span>
+                            <span class="sector-pill">💼 Oficinas y Salas de Reuniones</span>
+                            <span class="sector-pill">🚗 Estacionamientos y Accesos</span>
+                            <span class="sector-pill">☕ Comedores y Cafeterías</span>
                             <span class="sector-pill"
-                                >🏊‍♂️ Piscinas y Quinchos</span
+                                >🚻 Baños y Camarines</span
                             >
                             <span class="sector-pill"
-                                >🪜 Escaleras y Pasillos</span
+                                >🪜 Ascensores y Pasillos</span
                             >
                         </div>
                     </div>
@@ -159,7 +191,7 @@ const description =
                             client:load
                             serviceType="Limpieza de Edificios"
                             title="Cotizar Servicio"
-                            subtitle="Presupuesto para su comunidad en <strong style='color: var(--color-secondary)'>menos de 24 horas.</strong>"
+                            subtitle="Presupuesto para su edificio corporativo en <strong style='color: var(--color-secondary)'>menos de 24 horas.</strong>"
                         />
                     </div>
                 </div>
@@ -169,22 +201,26 @@ const description =
         <!-- CTA Banner -->
         <section class="cta-banner-split">
             <div class="cta-image-col">
-                <img
-                    src="/images/limpieza-edificios-5.png"
+                <Image
+                    src={ctaImg}
                     alt="Limpieza profesional en edificio residencial Limpik"
                     class="cta-image"
+                    widths={[640, 960, 1280]}
+                    sizes="(max-width: 900px) 100vw, 50vw"
+                    format="webp"
+                    quality={75}
+                    loading="lazy"
                 />
             </div>
             <div class="cta-content-col">
                 <div class="cta-content-wrapper">
-                    <span class="cta-label">Tranquilidad y Plusvalía</span>
+                    <span class="cta-label">Eficiencia e Imagen</span>
                     <h2>
-                        ¿Listo para mejorar la calidad de vida de su comunidad?
+                        ¿Listo para elevar el estándar de sus instalaciones?
                     </h2>
                     <p>
-                        Deje la limpieza de los espacios comunes en manos
-                        declientes expertos. Un entorno cuidado aumenta el valor
-                        de su propiedad.
+                        Externalice el personal de limpieza con expertos. Un entorno corporativo 
+                        cuidado mejora la productividad y la imagen de su empresa.
                     </p>
 
                     <div class="cta-actions">
@@ -200,6 +236,54 @@ const description =
         </section>
     </main>
     <Footer />
+  <script>
+      function initSlideshow() {
+          const slides = document.querySelectorAll(".hero-slideshow .slide");
+          let currentSlide = 0;
+          const intervalTime = 6000;
+          const transitionTime = 2000;
+  
+          if (slides.length > 0) {
+              // Reset state first to avoid stacking issues on re-init
+              slides.forEach((slide, index) => {
+                  slide.classList.remove("active", "last-active");
+                  if (index === 0) slide.classList.add("active");
+              });
+  
+              const interval = setInterval(() => {
+                  if (!document.body.contains(slides[0])) {
+                      clearInterval(interval);
+                      return;
+                  }
+  
+                  slides[currentSlide].classList.remove("active");
+                  slides[currentSlide].classList.add("last-active");
+  
+                  const prevSlide = currentSlide;
+                  currentSlide = (currentSlide + 1) % slides.length;
+  
+                  slides[currentSlide].classList.add("active");
+  
+                  setTimeout(() => {
+                      slides[prevSlide].classList.remove("last-active");
+                  }, transitionTime);
+              }, intervalTime);
+  
+              // Cleanup on navigation (if re-run)
+              document.addEventListener(
+                  "astro:before-preparation",
+                  () => {
+                      clearInterval(interval);
+                  },
+                  { once: true },
+              );
+          }
+      }
+  
+      // Run on initial load and View Transitions
+      initSlideshow();
+      document.addEventListener("astro:page-load", initSlideshow);
+  </script>
 </Layout>
 
 <style>
@@ -745,51 +829,3 @@ const description =
     }
 </style>
 
-<script>
-    function initSlideshow() {
-        const slides = document.querySelectorAll(".hero-slideshow .slide");
-        let currentSlide = 0;
-        const intervalTime = 6000;
-        const transitionTime = 2000;
-
-        if (slides.length > 0) {
-            // Reset state first to avoid stacking issues on re-init
-            slides.forEach((slide, index) => {
-                slide.classList.remove("active", "last-active");
-                if (index === 0) slide.classList.add("active");
-            });
-
-            const interval = setInterval(() => {
-                if (!document.body.contains(slides[0])) {
-                    clearInterval(interval);
-                    return;
-                }
-
-                slides[currentSlide].classList.remove("active");
-                slides[currentSlide].classList.add("last-active");
-
-                const prevSlide = currentSlide;
-                currentSlide = (currentSlide + 1) % slides.length;
-
-                slides[currentSlide].classList.add("active");
-
-                setTimeout(() => {
-                    slides[prevSlide].classList.remove("last-active");
-                }, transitionTime);
-            }, intervalTime);
-
-            // Cleanup on navigation (if re-run)
-            document.addEventListener(
-                "astro:before-preparation",
-                () => {
-                    clearInterval(interval);
-                },
-                { once: true },
-            );
-        }
-    }
-
-    // Run on initial load and View Transitions
-    initSlideshow();
-    document.addEventListener("astro:page-load", initSlideshow);
-</script>

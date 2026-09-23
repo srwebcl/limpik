@@ -1,0 +1,371 @@
+---
+// Banner y panel de preferencias de cookies (Ley 21.719).
+// La lógica de carga condicionada de GTM vive en el <head> de Layout.astro;
+// aquí solo se muestra la interfaz y se guarda la elección del usuario.
+---
+
+<div
+    id="cookie-consent"
+    class="cc-root"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="cc-title"
+    aria-describedby="cc-desc"
+    hidden
+    transition:persist
+>
+    <div class="cc-card">
+        <div class="cc-main" data-cc-view="main">
+            <p id="cc-title" class="cc-title">Su privacidad</p>
+            <p id="cc-desc" class="cc-text">
+                Usamos cookies necesarias para que el sitio funcione y, solo si
+                usted lo autoriza, cookies de Google Ads para medir la
+                efectividad de nuestros anuncios. Puede aceptarlas, rechazarlas
+                o configurarlas. Más información en nuestra <a
+                    href="/politica-de-cookies">Política de Cookies</a
+                >.
+            </p>
+            <div class="cc-actions">
+                <button type="button" class="cc-btn" data-cc-action="reject"
+                    >Rechazar</button
+                >
+                <button
+                    type="button"
+                    class="cc-btn cc-btn-ghost"
+                    data-cc-action="configure">Configurar</button
+                >
+                <button type="button" class="cc-btn" data-cc-action="accept"
+                    >Aceptar</button
+                >
+            </div>
+        </div>
+
+        <div class="cc-prefs" data-cc-view="prefs" hidden>
+            <p class="cc-title">Preferencias de cookies</p>
+            <div class="cc-option">
+                <div>
+                    <p class="cc-option-title">Necesarias</p>
+                    <p class="cc-option-text">
+                        Guardan su elección de cookies y permiten el
+                        funcionamiento básico del sitio. No se pueden desactivar.
+                    </p>
+                </div>
+                <label class="cc-switch">
+                    <input type="checkbox" checked disabled />
+                    <span aria-hidden="true"></span>
+                    <span class="sr-only">Cookies necesarias (siempre activas)</span>
+                </label>
+            </div>
+            <div class="cc-option">
+                <div>
+                    <p class="cc-option-title">Publicidad y medición</p>
+                    <p class="cc-option-text">
+                        Google Ads: mide las conversiones de nuestras campañas
+                        (por ejemplo, cuando nos solicita una cotización).
+                    </p>
+                </div>
+                <label class="cc-switch">
+                    <input type="checkbox" data-cc-category="ads" />
+                    <span aria-hidden="true"></span>
+                    <span class="sr-only">Cookies de publicidad y medición</span>
+                </label>
+            </div>
+            <div class="cc-actions">
+                <button type="button" class="cc-btn" data-cc-action="reject"
+                    >Rechazar todas</button
+                >
+                <button type="button" class="cc-btn" data-cc-action="save"
+                    >Guardar preferencias</button
+                >
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = "limpik_consent";
+    const CONSENT_VERSION = 1;
+    const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000; // se vuelve a preguntar a los 12 meses
+
+    type Consent = { v: number; ads: boolean; ts: number };
+
+    function readConsent(): Consent | null {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return null;
+            const c = JSON.parse(raw) as Consent;
+            if (c.v !== CONSENT_VERSION || Date.now() - c.ts > MAX_AGE_MS) {
+                return null;
+            }
+            return c;
+        } catch {
+            return null;
+        }
+    }
+
+    function clearAdCookies() {
+        const host = location.hostname.replace(/^www\./, "");
+        document.cookie.split(";").forEach((c) => {
+            const name = c.split("=")[0].trim();
+            if (/^(_gcl_|_gac_|_ga)/.test(name)) {
+                for (const domain of ["", `; domain=.${host}`]) {
+                    document.cookie = `${name}=; Max-Age=0; path=/${domain}`;
+                }
+            }
+        });
+    }
+
+    function applyConsent(ads: boolean) {
+        const previous = readConsent();
+        const consent: Consent = { v: CONSENT_VERSION, ads, ts: Date.now() };
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+        } catch {
+            /* sin almacenamiento: la elección vale solo para esta visita */
+        }
+        const state = ads ? "granted" : "denied";
+        window.gtag?.("consent", "update", {
+            ad_storage: state,
+            ad_user_data: state,
+            ad_personalization: state,
+        });
+        if (ads) {
+            window.__limpikLoadGTM?.();
+        } else if (previous?.ads || window.__gtmLoaded) {
+            // Revocación: se borran las cookies y se recarga sin GTM
+            clearAdCookies();
+            location.reload();
+            return;
+        }
+        hide();
+    }
+
+    const root = () => document.getElementById("cookie-consent");
+
+    function showView(view: "main" | "prefs") {
+        const el = root();
+        if (!el) return;
+        el.querySelectorAll<HTMLElement>("[data-cc-view]").forEach((v) => {
+            v.hidden = v.dataset.ccView !== view;
+        });
+        const adsInput = el.querySelector<HTMLInputElement>(
+            '[data-cc-category="ads"]',
+        );
+        if (adsInput) adsInput.checked = readConsent()?.ads ?? false;
+        el.hidden = false;
+    }
+
+    function hide() {
+        const el = root();
+        if (el) el.hidden = true;
+    }
+
+    // Delegación de eventos: se registra una sola vez y sobrevive a View Transitions
+    document.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        const opener = target.closest("[data-cookie-settings]");
+        if (opener) {
+            e.preventDefault();
+            showView("prefs");
+            return;
+        }
+        const btn = target.closest<HTMLElement>("[data-cc-action]");
+        if (!btn) return;
+        const action = btn.dataset.ccAction;
+        if (action === "accept") applyConsent(true);
+        else if (action === "reject") applyConsent(false);
+        else if (action === "configure") showView("prefs");
+        else if (action === "save") {
+            const adsInput = root()?.querySelector<HTMLInputElement>(
+                '[data-cc-category="ads"]',
+            );
+            applyConsent(!!adsInput?.checked);
+        }
+    });
+
+    document.addEventListener("astro:page-load", () => {
+        if (!readConsent()) showView("main");
+    });
+</script>
+
+<style>
+    .cc-root {
+        position: fixed;
+        inset: auto 1rem 1rem 1rem;
+        z-index: 100000;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    .cc-root[hidden] {
+        display: none;
+    }
+
+    .cc-card {
+        pointer-events: auto;
+        width: 100%;
+        max-width: 720px;
+        background: #fff;
+        color: var(--color-text-main, #1e293b);
+        border: 1px solid var(--color-border, #e2e8f0);
+        border-radius: 16px;
+        box-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.35);
+        padding: 1.25rem 1.5rem;
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
+
+    .cc-title {
+        font-family: var(--font-heading);
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--color-primary, #0056b3);
+        margin: 0 0 0.4rem;
+    }
+
+    .cc-text {
+        margin: 0 0 1rem;
+    }
+
+    .cc-text a {
+        color: var(--color-primary, #0056b3);
+        text-decoration: underline;
+    }
+
+    .cc-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    /* Aceptar y Rechazar con el mismo peso visual: la elección debe ser libre */
+    .cc-btn {
+        flex: 1 1 auto;
+        min-width: 120px;
+        padding: 0.7rem 1.1rem;
+        border-radius: 999px;
+        border: 2px solid var(--color-primary, #0056b3);
+        background: var(--color-primary, #0056b3);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+    .cc-btn:hover {
+        opacity: 0.88;
+    }
+
+    .cc-btn:focus-visible {
+        outline: 3px solid var(--color-secondary, #ff8000);
+        outline-offset: 2px;
+    }
+
+    .cc-btn-ghost {
+        background: transparent;
+        color: var(--color-primary, #0056b3);
+    }
+
+    .cc-option {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--color-border, #e2e8f0);
+    }
+
+    .cc-option:last-of-type {
+        margin-bottom: 1rem;
+    }
+
+    .cc-option-title {
+        font-weight: 600;
+        margin: 0 0 0.2rem;
+    }
+
+    .cc-option-text {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+
+    .cc-switch {
+        position: relative;
+        flex-shrink: 0;
+        width: 44px;
+        height: 24px;
+        cursor: pointer;
+    }
+
+    .cc-switch input {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .cc-switch span[aria-hidden] {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        background: #cbd5e1;
+        transition: background 0.2s;
+    }
+
+    .cc-switch span[aria-hidden]::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.2s;
+    }
+
+    .cc-switch input:checked + span {
+        background: var(--color-primary, #0056b3);
+    }
+
+    .cc-switch input:checked + span::after {
+        transform: translateX(20px);
+    }
+
+    .cc-switch input:disabled + span {
+        opacity: 0.6;
+    }
+
+    .cc-switch input:focus-visible + span {
+        outline: 3px solid var(--color-secondary, #ff8000);
+        outline-offset: 2px;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+        .cc-root {
+            inset: auto 0.5rem 0.5rem 0.5rem;
+        }
+        .cc-card {
+            padding: 1rem;
+        }
+        .cc-btn {
+            min-width: 0;
+            flex-basis: 100%;
+        }
+    }
+</style>

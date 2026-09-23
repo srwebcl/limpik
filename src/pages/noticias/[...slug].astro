@@ -3,9 +3,11 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { Image } from "astro:assets";
+import { breadcrumbSchema, ORG_ID, SITE_URL } from "../../data/business";
 
 export async function getStaticPaths() {
-    const posts = await getCollection("blog");
+    const posts = await getCollection("blog", ({ data }) => !data.draft);
     return posts.map((post) => ({
         params: { slug: post.slug },
         props: { post },
@@ -14,11 +16,42 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+const path = `/noticias/${post.slug}`;
+const ogImage = post.data.ogImage ?? post.data.image?.src;
+const schema = [
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": `${SITE_URL}${path}#article`,
+        headline: post.data.title,
+        description: post.data.description,
+        image: ogImage ? new URL(ogImage, SITE_URL).href : undefined,
+        datePublished: post.data.pubDate.toISOString(),
+        dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+        author: { "@id": ORG_ID },
+        publisher: { "@id": ORG_ID },
+        mainEntityOfPage: `${SITE_URL}${path}`,
+        inLanguage: "es-CL",
+        keywords: post.data.tags?.join(", "),
+    },
+    breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Noticias", path: "/noticias" },
+        { name: post.data.title, path },
+    ]),
+];
 ---
 
 <Layout
-    title={`${post.data.title} | Noticias Limpik`}
+    title={`${post.data.seoTitle ?? post.data.title} | Limpik`}
     description={post.data.description}
+    type="article"
+    image={ogImage}
+    imageAlt={post.data.imageAlt ?? post.data.title}
+    publishedTime={post.data.pubDate}
+    modifiedTime={post.data.updatedDate}
+    schema={schema}
 >
     <Header />
 
@@ -50,9 +83,15 @@ const { Content } = await post.render();
             {
                 post.data.image && (
                     <div class="container featured-image-wrapper">
-                        <img
+                        <Image
                             src={post.data.image}
-                            alt={post.data.title}
+                            widths={[480, 800, 1200]}
+                            sizes="(max-width: 832px) 100vw, 800px"
+                            format="webp"
+                            quality={75}
+                            loading="eager"
+                            fetchpriority="high"
+                            alt={post.data.imageAlt ?? post.data.title}
                             class="featured-image"
                         />
                     </div>

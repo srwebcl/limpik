@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import logoImg from "../assets/images/logo-web.jpg";
 const pathname = Astro.url.pathname;
 const isHome = pathname === "/";
 ---
@@ -10,7 +12,17 @@ const isHome = pathname === "/";
     <div class="container header-container">
         <!-- Logo -->
         <a href="/" class="logo-link" aria-label="Ir al inicio">
-            <img src="/images/logo-web.jpg" alt="Limpik" class="logo" />
+            <Image
+                src={logoImg}
+                alt="Limpik"
+                class="logo"
+                width={434}
+                height={130}
+                densities={[1, 2]}
+                format="webp"
+                quality={85}
+                loading="eager"
+            />
         </a>
 
         <!-- Desktop Navigation -->
@@ -93,7 +105,7 @@ const isHome = pathname === "/";
                                         >Limpieza de Edificios</span
                                     >
                                     <span class="desc"
-                                        >Comunidades y residencias.</span
+                                        >Edificios corporativos.</span
                                     >
                                 </div>
                             </a>

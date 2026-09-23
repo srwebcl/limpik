@@ -1,15 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getImage } from "astro:assets";
+import heroImg1 from "../assets/images/denuncias.png";
+import { breadcrumbSchema } from "../data/business";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ComplaintForm from "../components/forms/ComplaintForm.jsx";
 
-const title = "Canal de Denuncias | Limpik";
+const title = "Canal de Denuncias Ley Karin | Limpik";
 const description =
-    "Canal oficial para denuncias de Acoso Laboral, Acoso Sexual y Violencia en el Trabajo (Ley Karin).";
+    "Canal confidencial para denunciar acoso laboral, acoso sexual y violencia en el trabajo, conforme a la Ley 21.643 (Ley Karin). Admite denuncias anónimas.";
+const schema = breadcrumbSchema([
+    { name: "Inicio", path: "/" },
+    { name: "Canal de Denuncias", path: "/denuncias" },
+]);
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={schema}>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -18,7 +33,7 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/denuncias.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                 </div>
             </div>

@@ -1,15 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getImage } from "astro:assets";
+import heroImg1 from "../assets/images/contacto.png";
+import { breadcrumbSchema } from "../data/business";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import WorkWithUsForm from "../components/forms/WorkWithUsForm.jsx";
 
-const title = "Trabaje con Nosotros | Limpik";
+const title = "Trabaja con Nosotros: Empleos de Limpieza | Limpik";
 const description =
-    "Únete al equipo de Limpik. Estamos buscando personas comprometidas para servicios de limpieza profesional.";
+    "Postula a Limpik y súmate a nuestro equipo de limpieza profesional en Santiago y la V Región. Estabilidad laboral y capacitación continua.";
+const schema = breadcrumbSchema([
+    { name: "Inicio", path: "/" },
+    { name: "Trabaje con Nosotros", path: "/trabaje-con-nosotros" },
+]);
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schema={schema}>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -18,7 +33,7 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/contacto.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                     <!-- Using same image as contact for now, or could use another generic office/cleaning image if available -->
                 </div>

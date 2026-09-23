@@ -1,63 +1,178 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import "@fontsource-variable/inter/wght.css";
+import "@fontsource-variable/outfit/wght.css";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import outfitLatin from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 import "../styles/global.css";
-
-import SmartWhatsApp from "../components/SmartWhatsApp.jsx";
+import ContactModal from "../components/forms/ContactModal.jsx";
+import CookieConsent from "../components/CookieConsent.astro";
+import {
+	business,
+	organizationSchema,
+	websiteSchema,
+} from "../data/business";
 
 interface Props {
 	title: string;
-	description?: string;
+	description: string;
+	image?: string;
+	imageAlt?: string;
+	type?: "website" | "article";
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	noindex?: boolean;
+	schema?: object | object[];
 }
 
-const { title, description = "Limpik - Soluciones Corporativas de Limpieza" } =
-	Astro.props;
+const {
+	title,
+	description,
+	image = business.defaultImage,
+	imageAlt = "Personal de limpieza Limpik trabajando en una oficina corporativa",
+	type = "website",
+	publishedTime,
+	modifiedTime,
+	noindex = false,
+	schema = [],
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://www.limpik.cl");
+const canonicalPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const canonicalURL = new URL(canonicalPath, site).href;
+const imageURL = new URL(image, site).href;
+const jsonLd = [
+	organizationSchema,
+	websiteSchema,
+	...(Array.isArray(schema) ? schema : [schema]),
+];
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es-CL">
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
-		<meta name="generator" content={Astro.generator} />
+		<link rel="canonical" href={canonicalURL} />
+		{noindex && <meta name="robots" content="noindex, follow" />}
 
-		<!-- Google Fonts: Outfit (Headings) + Inter (Body) -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap"
-			rel="stylesheet"
+		<!-- Open Graph -->
+		<meta property="og:site_name" content={business.name} />
+		<meta property="og:locale" content="es_CL" />
+		<meta property="og:type" content={type} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:image" content={imageURL} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={imageAlt} />
+		{
+			publishedTime && (
+				<meta
+					property="article:published_time"
+					content={publishedTime.toISOString()}
+				/>
+			)
+		}
+		{
+			modifiedTime && (
+				<meta
+					property="article:modified_time"
+					content={modifiedTime.toISOString()}
+				/>
+			)
+		}
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- Icons -->
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<meta name="theme-color" content="#0056b3" />
+		<meta name="generator" content={Astro.generator} />
+		<slot name="head" />
+
+		<!-- Structured data -->
+		<script
+			is:inline
+			type="application/ld+json"
+			set:html={JSON.stringify(jsonLd)}
 		/>
 
-		<title>{title}</title>
+		<!-- Fuentes autoalojadas: Outfit (títulos) + Inter (texto) -->
+		<link
+			rel="preload"
+			href={interLatin}
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href={outfitLatin}
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+
 		<ViewTransitions />
+		<!--
+			Consentimiento (Ley 21.719): todo parte denegado (Consent Mode v2)
+			y GTM solo se carga si el usuario aceptó cookies de publicidad.
+		-->
 		<script is:inline>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({
+			window.dataLayer = window.dataLayer || [];
+			window.gtag = function () {
+				window.dataLayer.push(arguments);
+			};
+			window.gtag("consent", "default", {
+				ad_storage: "denied",
+				ad_user_data: "denied",
+				ad_personalization: "denied",
+				analytics_storage: "denied",
+				functionality_storage: "denied",
+				personalization_storage: "denied",
+				security_storage: "granted",
+			});
+			window.gtag("set", "ads_data_redaction", true);
+			window.__limpikLoadGTM = function () {
+				if (window.__gtmLoaded) return;
+				window.__gtmLoaded = true;
+				window.dataLayer.push({
 					"gtm.start": new Date().getTime(),
 					event: "gtm.js",
 				});
-				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != "dataLayer" ? "&l=" + l : "";
+				var j = document.createElement("script");
 				j.async = true;
-				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, "script", "dataLayer", "GTM-PDQTGRW3");
+				j.src = "https://www.googletagmanager.com/gtm.js?id=GTM-PDQTGRW3";
+				document.head.appendChild(j);
+			};
+			try {
+				var c = JSON.parse(localStorage.getItem("limpik_consent") || "null");
+				if (
+					c &&
+					c.v === 1 &&
+					c.ads &&
+					Date.now() - c.ts < 365 * 24 * 60 * 60 * 1000
+				) {
+					window.gtag("consent", "update", {
+						ad_storage: "granted",
+						ad_user_data: "granted",
+						ad_personalization: "granted",
+					});
+					window.__limpikLoadGTM();
+				}
+			} catch (e) {}
 		</script>
 	</head>
 	<body>
-		<noscript
-			><iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-PDQTGRW3"
-				height="0"
-				width="0"
-				style="display:none;visibility:hidden"></iframe></noscript
-		>
 		<slot />
-		<SmartWhatsApp client:idle />
+		<ContactModal client:load />
+		<CookieConsent />
+
 
 		<script>
 			// Simple Scroll Reveal Script
@@ -87,8 +202,32 @@ const { title, description = "Limpik - Soluciones Corporativas de Limpieza" } =
 			// Run locally
 			initScrollReveal();
 
+			// Global CTA Interceptor for Contact Modal
+			function initModalInterceptor() {
+				document.addEventListener('click', (e) => {
+					// @ts-ignore
+					const anchor = e.target.closest('a');
+					if (anchor) {
+						const href = anchor.getAttribute('href');
+						if (href === '#cotizar' || href === '/contacto') {
+							e.preventDefault();
+							let service = '';
+							if (window.location.pathname.includes('edificios')) service = 'Limpieza de Edificios';
+							else if (window.location.pathname.includes('empresas')) service = 'Limpieza de Empresas';
+							
+							window.dispatchEvent(new CustomEvent('openContactModal', { detail: { service } }));
+						}
+					}
+				});
+			}
+
+			// Initialize interceptor
+			initModalInterceptor();
+
 			// Re-run on View Transition navigation
-			document.addEventListener("astro:page-load", initScrollReveal);
+			document.addEventListener("astro:page-load", () => {
+				initScrollReveal();
+			});
 		</script>
 	</body>
 </html>

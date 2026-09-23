@@ -1,0 +1,110 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { business } from "../data/business";
+---
+
+<LegalLayout
+    title="Términos y Condiciones de Uso | Limpik"
+    heading="Términos y Condiciones"
+    description="Condiciones de uso del sitio web limpik.cl: alcance de la información, cotizaciones, propiedad intelectual, responsabilidad y legislación aplicable."
+    updated="23 de septiembre de 2026"
+>
+    <h2 id="identificacion">1. Identificación</h2>
+    <p>
+        El sitio web <strong>limpik.cl</strong> es operado por <strong
+            >{business.legalName}</strong
+        >, RUT {business.rut}, bajo el nombre comercial {business.name}
+        (en adelante, "Limpik"). Contacto: <a href={`mailto:${business.email}`}
+            >{business.email}</a
+        >.
+    </p>
+
+    <h2 id="aceptacion">2. Aceptación</h2>
+    <p>
+        Al navegar o usar este sitio usted acepta estos Términos y Condiciones.
+        Si no está de acuerdo, le pedimos no utilizar el sitio. El tratamiento
+        de sus datos personales se rige por nuestra <a
+            href="/politica-de-privacidad">Política de Privacidad</a
+        > y el uso de cookies por nuestra <a href="/politica-de-cookies"
+            >Política de Cookies</a
+        >.
+    </p>
+
+    <h2 id="informacion">3. Información del sitio y cotizaciones</h2>
+    <ul>
+        <li>
+            La información sobre servicios publicada en el sitio es referencial y
+            no constituye una oferta vinculante.
+        </li>
+        <li>
+            Las solicitudes enviadas por los formularios son requerimientos de
+            cotización. Los servicios, precios y condiciones se definen en una
+            propuesta formal y en el contrato que las partes firmen.
+        </li>
+        <li>
+            Los plazos de respuesta informados (por ejemplo, "menos de 24
+            horas") son compromisos de servicio en días hábiles y pueden variar
+            por causas ajenas a Limpik.
+        </li>
+    </ul>
+
+    <h2 id="uso">4. Uso adecuado del sitio</h2>
+    <p>Usted se compromete a no:</p>
+    <ul>
+        <li>Entregar información falsa o datos de terceros sin autorización.</li>
+        <li>
+            Usar los formularios para enviar publicidad no solicitada, contenido
+            ilícito o malicioso.
+        </li>
+        <li>
+            Intentar vulnerar la seguridad del sitio, interferir en su
+            funcionamiento o acceder a áreas no públicas.
+        </li>
+        <li>
+            Hacer un uso abusivo del Canal de Denuncias, que existe para reportar
+            hechos de buena fe conforme a la Ley N° 21.643.
+        </li>
+    </ul>
+
+    <h2 id="propiedad">5. Propiedad intelectual</h2>
+    <p>
+        Los textos, imágenes, videos, logotipos, marcas y diseño del sitio son
+        de propiedad de Limpik o se usan con autorización, y están protegidos
+        por la Ley N° 17.336 sobre Propiedad Intelectual y la Ley N° 19.039
+        sobre Propiedad Industrial. No pueden reproducirse, distribuirse ni
+        modificarse sin autorización previa y por escrito, salvo para uso
+        personal y no comercial.
+    </p>
+
+    <h2 id="enlaces">6. Enlaces a terceros</h2>
+    <p>
+        El sitio puede contener enlaces a servicios de terceros, como WhatsApp o
+        Google Maps. Limpik no controla ni es responsable de sus contenidos ni
+        de sus políticas de privacidad.
+    </p>
+
+    <h2 id="responsabilidad">7. Responsabilidad</h2>
+    <p>
+        Procuramos que el sitio esté disponible y que su información sea exacta
+        y esté actualizada, pero no garantizamos la ausencia de interrupciones o
+        errores. Los artículos del blog tienen fines informativos y no
+        reemplazan la asesoría profesional en cada caso. En la medida que lo
+        permita la ley, Limpik no responde por daños derivados del uso del
+        sitio o de la imposibilidad de usarlo.
+    </p>
+
+    <h2 id="modificaciones">8. Modificaciones</h2>
+    <p>
+        Podemos modificar estos Términos y Condiciones en cualquier momento. La
+        versión vigente es la que se publica en esta página, con su fecha de
+        actualización.
+    </p>
+
+    <h2 id="ley">9. Legislación aplicable</h2>
+    <p>
+        Estos Términos y Condiciones se rigen por las leyes de la República de
+        Chile. Cualquier controversia será conocida por los tribunales
+        competentes de Chile, sin perjuicio de los derechos que la ley otorga a
+        los consumidores.
+    </p>
+</LegalLayout>

@@ -1,15 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getImage, Image } from "astro:assets";
+import ctaImg from "../../assets/images/limpieza-empresa-6.png";
+import heroImg1 from "../../assets/images/limpieza-empresa-2.png";
+import heroImg2 from "../../assets/images/limpieza-empresa-4.png";
+import heroImg3 from "../../assets/images/limpieza-empresa-8.png";
+import { serviceSchema, breadcrumbSchema } from "../../data/business";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import ContactForm from "../../components/forms/ContactForm.jsx";
 
-const title = "Limpieza de Empresas y Oficinas | Limpik";
+const title = "Limpieza de Empresas y Oficinas en Santiago y Viña | Limpik";
 const description =
-    "Servicio de limpieza profesional para empresas, oficinas y espacios corporativos. Mejore la imagen y productividad de su organización.";
+    "Limpieza para oficinas, bodegas, locales comerciales, colegios y plantas productivas en Santiago y la V Región. Personal capacitado y supervisión online.";
+const path = "/servicios/limpieza-empresas";
+const schema = [
+    serviceSchema({
+        name: "Limpieza de Empresas",
+        description,
+        path,
+        serviceType: "Limpieza de empresas y oficinas",
+    }),
+    breadcrumbSchema([
+        { name: "Inicio", path: "/" },
+        { name: "Limpieza de Empresas", path },
+    ]),
+];
+const heroImg1Bg = await getImage({ src: heroImg1, format: "webp", width: 1600, quality: 70 });
+const heroImg2Bg = await getImage({ src: heroImg2, format: "webp", width: 1600, quality: 70 });
+const heroImg3Bg = await getImage({ src: heroImg3, format: "webp", width: 1600, quality: 70 });
 ---
 
-<Layout title={title} description={description}>
+<Layout
+    title={title}
+    description={description}
+    image="/og/limpieza-empresas.jpg"
+    imageAlt="Servicio de limpieza de empresas Limpik"
+    schema={schema}
+>
+    <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={heroImg1Bg.src}
+        fetchpriority="high"
+    />
     <Header />
 
     <main class="main-content-spaced">
@@ -19,17 +54,17 @@ const description =
             <div class="hero-slideshow">
                 <div
                     class="slide active"
-                    style="background-image: url('/images/limpieza-empresa-2.png')"
+                    style={`background-image: url('${heroImg1Bg.src}')`}
                 >
                 </div>
                 <div
                     class="slide"
-                    style="background-image: url('/images/limpieza-empresa-4.png')"
+                    style={`background-image: url('${heroImg2Bg.src}')`}
                 >
                 </div>
                 <div
                     class="slide"
-                    style="background-image: url('/images/limpieza-empresa-8.png')"
+                    style={`background-image: url('${heroImg3Bg.src}')`}
                 >
                 </div>
             </div>
@@ -57,10 +92,8 @@ const description =
 
                     <div class="hero-actions">
                         <a
-                            href="https://wa.me/56984749397?text=Hola,%20me%20interesa%20un%20presupuesto%20para%20limpieza%20de%20empresas"
+                            href="#cotizar"
                             class="btn-strategic"
-                            target="_blank"
-                            rel="noopener noreferrer"
                         >
                             <svg
                                 width="24"
@@ -171,10 +204,15 @@ const description =
         <!-- CTA Banner (Split Layout) -->
         <section class="cta-banner-split">
             <div class="cta-image-col">
-                <img
-                    src="/images/limpieza-empresa-6.png"
+                <Image
+                    src={ctaImg}
                     alt="Profesional de limpieza Limpik en oficina corporativa"
                     class="cta-image"
+                    widths={[640, 960, 1280]}
+                    sizes="(max-width: 900px) 100vw, 50vw"
+                    format="webp"
+                    quality={75}
+                    loading="lazy"
                 />
             </div>
             <div class="cta-content-col">
@@ -200,6 +238,54 @@ const description =
     </main>
 
     <Footer />
+  <script>
+      function initSlideshow() {
+          const slides = document.querySelectorAll(".hero-slideshow .slide");
+          let currentSlide = 0;
+          const intervalTime = 6000;
+          const transitionTime = 2000;
+  
+          if (slides.length > 0) {
+              // Reset state first to avoid stacking issues on re-init
+              slides.forEach((slide, index) => {
+                  slide.classList.remove("active", "last-active");
+                  if (index === 0) slide.classList.add("active");
+              });
+  
+              const interval = setInterval(() => {
+                  if (!document.body.contains(slides[0])) {
+                      clearInterval(interval);
+                      return;
+                  }
+  
+                  slides[currentSlide].classList.remove("active");
+                  slides[currentSlide].classList.add("last-active");
+  
+                  const prevSlide = currentSlide;
+                  currentSlide = (currentSlide + 1) % slides.length;
+  
+                  slides[currentSlide].classList.add("active");
+  
+                  setTimeout(() => {
+                      slides[prevSlide].classList.remove("last-active");
+                  }, transitionTime);
+              }, intervalTime);
+  
+              // Cleanup on navigation (if re-run)
+              document.addEventListener(
+                  "astro:before-preparation",
+                  () => {
+                      clearInterval(interval);
+                  },
+                  { once: true },
+              );
+          }
+      }
+  
+      // Run on initial load and View Transitions
+      initSlideshow();
+      document.addEventListener("astro:page-load", initSlideshow);
+  </script>
 </Layout>
 
 <style>
@@ -860,51 +946,3 @@ const description =
     }
 </style>
 
-<script>
-    function initSlideshow() {
-        const slides = document.querySelectorAll(".hero-slideshow .slide");
-        let currentSlide = 0;
-        const intervalTime = 6000;
-        const transitionTime = 2000;
-
-        if (slides.length > 0) {
-            // Reset state first to avoid stacking issues on re-init
-            slides.forEach((slide, index) => {
-                slide.classList.remove("active", "last-active");
-                if (index === 0) slide.classList.add("active");
-            });
-
-            const interval = setInterval(() => {
-                if (!document.body.contains(slides[0])) {
-                    clearInterval(interval);
-                    return;
-                }
-
-                slides[currentSlide].classList.remove("active");
-                slides[currentSlide].classList.add("last-active");
-
-                const prevSlide = currentSlide;
-                currentSlide = (currentSlide + 1) % slides.length;
-
-                slides[currentSlide].classList.add("active");
-
-                setTimeout(() => {
-                    slides[prevSlide].classList.remove("last-active");
-                }, transitionTime);
-            }, intervalTime);
-
-            // Cleanup on navigation (if re-run)
-            document.addEventListener(
-                "astro:before-preparation",
-                () => {
-                    clearInterval(interval);
-                },
-                { once: true },
-            );
-        }
-    }
-
-    // Run on initial load and View Transitions
-    initSlideshow();
-    document.addEventListener("astro:page-load", initSlideshow);
-</script>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PrivacyConsent, { Honeypot, PRIVACY_POLICY_VERSION } from './PrivacyConsent.jsx';
 
 export default function WorkWithUsForm() {
     const [formData, setFormData] = useState({
@@ -11,6 +12,15 @@ export default function WorkWithUsForm() {
     });
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error, file-error
     const [fileError, setFileError] = useState('');
+    const [privacyAccepted, setPrivacyAccepted] = useState(false);
+    const [futureProcesses, setFutureProcesses] = useState(false);
+    const [website, setWebsite] = useState('');
+
+    const resetForm = () => {
+        setFormData({ name: '', email: '', phone: '', message: '', type: 'recruitment', attachments: [] });
+        setPrivacyAccepted(false);
+        setFutureProcesses(false);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -62,7 +72,11 @@ export default function WorkWithUsForm() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    website,
+                    consent: { privacy: privacyAccepted, futureProcesses, policyVersion: PRIVACY_POLICY_VERSION },
+                }),
             });
 
             if (response.ok) {
@@ -85,7 +99,7 @@ export default function WorkWithUsForm() {
                 <p>Gracias por tu interés en trabajar con nosotros. Hemos recibido tus datos correctamente.</p>
                 <button onClick={() => {
                     setStatus('idle');
-                    setFormData({ name: '', email: '', phone: '', message: '', type: 'recruitment' });
+                    resetForm();
                 }} className="btn-reset">Enviar otra postulación</button>
             </div>
         );
@@ -158,15 +172,31 @@ export default function WorkWithUsForm() {
                     onChange={handleFileChange}
                 />
                 <small style={{ display: 'block', marginTop: '0.5rem', color: '#64748b' }}>
-                    Si no tienes tu CV a mano, puedes enviarlo después.
+                    Si no tienes tu CV a mano, puedes enviarlo después. No incluyas datos sensibles (salud, religión, afiliación sindical, etc.) ni fotografías.
                 </small>
                 {fileError && <p className="error-msg" style={{ marginTop: '0.5rem' }}>{fileError}</p>}
             </div>
 
+            <PrivacyConsent
+                id="privacy-recruitment"
+                checked={privacyAccepted}
+                onChange={setPrivacyAccepted}
+                purpose="evaluar tu postulación en nuestros procesos de selección. Conservamos tus datos 6 meses, salvo que autorices lo contrario."
+            />
+            <PrivacyConsent
+                id="privacy-future"
+                checked={futureProcesses}
+                onChange={setFutureProcesses}
+                required={false}
+                showNotice={false}
+                label="(Opcional) Autorizo que Limpik conserve mis datos hasta 24 meses para considerarme en futuros procesos de selección."
+            />
+            <Honeypot value={website} onChange={setWebsite} />
+
             <button
                 type="submit"
                 className="btn-submit"
-                disabled={status === 'submitting' || !!fileError} // Disable if file error exists
+                disabled={status === 'submitting' || !!fileError || !privacyAccepted}
             >
                 {status === 'submitting' ? 'Enviando...' : 'Enviar Postulación'}
             </button>
