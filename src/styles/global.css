@@ -217,3 +217,35 @@ img {
 .main-content-spaced {
   padding-top: var(--header-height);
 }
+/* --- Destino de los CTA de cotización --- */
+[data-quote-form] {
+  scroll-margin-top: 100px; /* altura del header fijo */
+}
+
+@media (max-width: 768px) {
+  [data-quote-form] {
+    scroll-margin-top: 84px;
+  }
+}
+
+[data-quote-form].quote-highlight .contact-form {
+  animation: quote-highlight 1.6s ease-out 0.5s;
+}
+
+@keyframes quote-highlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 128, 0, 0.55);
+  }
+  60% {
+    box-shadow: 0 0 0 12px rgba(255, 128, 0, 0);
+  }
+  100% {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-quote-form].quote-highlight .contact-form {
+    animation: none;
+  }
+}

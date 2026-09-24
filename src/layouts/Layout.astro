@@ -202,27 +202,80 @@ const jsonLd = [
 			// Run locally
 			initScrollReveal();
 
-			// Global CTA Interceptor for Contact Modal
-			function initModalInterceptor() {
-				document.addEventListener('click', (e) => {
-					// @ts-ignore
-					const anchor = e.target.closest('a');
-					if (anchor) {
-						const href = anchor.getAttribute('href');
-						if (href === '#cotizar' || href === '/contacto') {
-							e.preventDefault();
-							let service = '';
-							if (window.location.pathname.includes('edificios')) service = 'Limpieza de Edificios';
-							else if (window.location.pathname.includes('empresas')) service = 'Limpieza de Empresas';
-							
-							window.dispatchEvent(new CustomEvent('openContactModal', { detail: { service } }));
-						}
-					}
+			// CTAs de cotización (a[data-cta="cotizar"]):
+			// - si la página tiene formulario ([data-quote-form]) → scroll suave hasta él
+			// - si no → se abre el pop-up de cotización
+			// Los enlaces normales a /contacto (sin data-cta) navegan a la página.
+			function scrollToQuoteForm(target: HTMLElement) {
+				const reduceMotion = window.matchMedia(
+					"(prefers-reduced-motion: reduce)",
+				).matches;
+				// Si el formulario aún no "aparece" (reveal-on-scroll), se muestra sin animación
+				// para que su posición final no cambie después de calcular el scroll
+				const reveal = target.closest<HTMLElement>(".reveal-on-scroll:not(.visible)");
+				if (reveal) {
+					reveal.style.transition = "none";
+					reveal.classList.add("visible");
+					void reveal.offsetHeight;
+					requestAnimationFrame(() => (reveal.style.transition = ""));
+				}
+				target.scrollIntoView({
+					behavior: reduceMotion ? "auto" : "smooth",
+					block: "start",
 				});
+				target.classList.remove("quote-highlight");
+				void target.offsetWidth; // reinicia la animación
+				target.classList.add("quote-highlight");
+				// En escritorio se enfoca el primer campo; en táctil no, para no abrir el teclado
+				if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+					setTimeout(() => {
+						target
+							.querySelector<HTMLElement>("input:not([type=hidden]):not([tabindex='-1']), select, textarea")
+							?.focus({ preventScroll: true });
+					}, reduceMotion ? 0 : 700);
+				}
 			}
 
-			// Initialize interceptor
-			initModalInterceptor();
+			// Fase de captura: debe ejecutarse antes que el router de View Transitions,
+			// que de lo contrario navega a /contacto antes de que esto actúe
+			document.addEventListener("click", (e) => {
+				if (
+					e.button !== 0 ||
+					e.metaKey ||
+					e.ctrlKey ||
+					e.shiftKey ||
+					e.altKey
+				) {
+					return; // abrir en pestaña nueva, etc.
+				}
+				const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>(
+					'a[data-cta="cotizar"]',
+				);
+				if (!anchor) return;
+				e.preventDefault();
+
+				const form = document.querySelector<HTMLElement>("[data-quote-form]");
+				if (form) {
+					scrollToQuoteForm(form);
+					return;
+				}
+
+				const path = window.location.pathname;
+				let service = "";
+				if (path.includes("edificios")) service = "Limpieza de Edificios";
+				else if (path.includes("empresas")) service = "Limpieza de Empresas";
+				window.dispatchEvent(
+					new CustomEvent("openContactModal", { detail: { service, trigger: anchor } }),
+				);
+			}, true);
+
+			// Si se llega con #cotizar desde otra página, el formulario queda bajo el header fijo
+			document.addEventListener("astro:page-load", () => {
+				if (location.hash === "#cotizar") {
+					const form = document.querySelector<HTMLElement>("[data-quote-form]");
+					if (form) setTimeout(() => form.scrollIntoView({ block: "start" }), 50);
+				}
+			});
 
 			// Re-run on View Transition navigation
 			document.addEventListener("astro:page-load", () => {

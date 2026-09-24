@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import PrivacyConsent, { Honeypot, PRIVACY_POLICY_VERSION } from './PrivacyConsent.jsx';
 
 export default function ContactForm({ serviceType = '', title = '', subtitle = '' }) {
@@ -20,6 +20,20 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [website, setWebsite] = useState('');
   const consentId = `privacy-${useId().replace(/:/g, '')}`;
+  const formRef = useRef(null);
+  const stepChanged = useRef(false);
+
+  // Al cambiar de paso, si el inicio del formulario quedó fuera de la vista, se vuelve a él
+  useEffect(() => {
+    if (!stepChanged.current) return;
+    const form = formRef.current;
+    if (!form) return;
+    const top = form.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * 0.5) {
+      form.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+    form.querySelector('.form-step input, .form-step select, .form-step textarea')?.focus({ preventScroll: true });
+  }, [step]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,14 +41,20 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
   };
 
   const nextStep = () => {
-    if(!formData.name || !formData.email || !formData.phone || !formData.company || !formData.address) {
-      alert("Por favor, completa los campos obligatorios (*) antes de continuar.");
-      return;
+    // Validación nativa: marca el primer campo con error y muestra su mensaje
+    const fields = formRef.current?.querySelectorAll('.form-step input, .form-step select') ?? [];
+    for (const field of fields) {
+      if (!field.checkValidity()) {
+        field.reportValidity();
+        return;
+      }
     }
+    stepChanged.current = true;
     setStep(2);
   };
 
   const prevStep = () => {
+    stepChanged.current = true;
     setStep(1);
   };
 
@@ -80,7 +100,7 @@ export default function ContactForm({ serviceType = '', title = '', subtitle = '
   }
 
   return (
-    <form onSubmit={handleSubmit} className="contact-form">
+    <form ref={formRef} onSubmit={handleSubmit} className="contact-form">
       {title && <h3 className="form-title">{title}</h3>}
       {subtitle && <p className="form-subtitle" dangerouslySetInnerHTML={{ __html: subtitle }}></p>}
       

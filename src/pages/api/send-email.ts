@@ -213,7 +213,7 @@ export const POST: APIRoute = async ({ request }) => {
         <p>Hola <strong>${esc(name)}</strong>,</p>
         <p>Gracias por contactar a <strong>Limpik</strong>. Hemos recibido su ${type === 'recruitment' ? 'postulación' : 'solicitud'} correctamente.</p>
         <p>Nos pondremos en contacto con usted dentro de las próximas 24 horas hábiles.</p>
-        <p>Si tiene alguna urgencia, puede escribirnos directamente a nuestro WhatsApp.</p>
+        <p>Si tiene alguna consulta adicional, puede escribirnos a ${business.email}.</p>
         <div style="text-align:center;margin-top:30px;">
           <a href="${SITE_URL}" style="background-color:#ea580c;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;font-weight:bold;">Visitar Sitio Web</a>
         </div>

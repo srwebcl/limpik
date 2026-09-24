@@ -50,7 +50,7 @@ const mapsUrl = (lat: number, lng: number) =>
                         >Limpieza de Edificios</a
                     >
                 </li>
-                <li><a href="/contacto">Solicitar Cotización</a></li>
+                <li><a href="/contacto" data-cta="cotizar">Solicitar Cotización</a></li>
             </ul>
         </nav>
 
@@ -99,14 +99,6 @@ const mapsUrl = (lat: number, lng: number) =>
             </a>
 
             <div class="contact-details">
-                <a
-                    href={`https://wa.me/${business.whatsapp}`}
-                    class="detail-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <span class="icon" aria-hidden="true">💬</span> WhatsApp {phoneDisplay}
-                </a>
                 <a href={`mailto:${business.email}`} class="detail-link">
                     <span class="icon" aria-hidden="true">📧</span> {business.email}
                 </a>
@@ -311,8 +303,8 @@ const mapsUrl = (lat: number, lng: number) =>
     }
 
     .icon-box {
-        color: #25d366; /* WhatsApp Green */
-        background: rgba(37, 211, 102, 0.1);
+        color: var(--color-secondary);
+        background: rgba(255, 128, 0, 0.12);
         width: 45px;
         height: 45px;
         border-radius: 10px;
@@ -323,7 +315,7 @@ const mapsUrl = (lat: number, lng: number) =>
     }
 
     .contact-card:hover .icon-box {
-        background: #25d366;
+        background: var(--color-secondary);
         color: white;
     }
 

@@ -15,7 +15,6 @@ export const business = {
     privacyEmail: "rsanchez@limpik.cl",
     complaintsEmail: "rrhh@limpik.cl",
     recruitmentEmail: "rrhh@limpik.cl",
-    whatsapp: "56984749397",
     foundingDate: "2008",
     description:
         "Empresa chilena con más de 18 años de experiencia en servicios integrales de limpieza para empresas, oficinas y edificios corporativos y residenciales en Santiago, Viña del Mar, Valparaíso y Concón.",
